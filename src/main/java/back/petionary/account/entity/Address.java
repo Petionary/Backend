@@ -8,9 +8,9 @@ import javax.persistence.Embeddable;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
-@Embeddable
 @NoArgsConstructor
 @Getter
+@Embeddable
 public class Address {
 
     @Column(nullable = false)
@@ -24,9 +24,11 @@ public class Address {
         this.detail = validate(detail);
     }
     private String validate(String element) {
-        if(element.isBlank()) {
+        if(element == null) {
             throw new CustomException(CustomErrorCode.NOT_VALUE);
         }
         return element;
     }
 }
+
+
