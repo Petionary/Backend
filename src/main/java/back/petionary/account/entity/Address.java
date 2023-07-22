@@ -1,5 +1,7 @@
 package back.petionary.account.entity;
 
+import back.petionary.common.exception.CustomErrorCode;
+import back.petionary.common.exception.CustomException;
 import java.util.Objects;
 import javax.persistence.Column;
 import javax.persistence.Embeddable;
@@ -18,7 +20,13 @@ public class Address {
     private String detail; //상세주소
 
     public Address(String zipCode, String detail) {
-        this.zipCode = Objects.requireNonNull(zipCode, "값이 존재하지 않습니다.");
-        this.detail = Objects.requireNonNull(detail, "값이 존재하지 않습니다.");
+        this.zipCode = validate(zipCode);
+        this.detail = validate(detail);
+    }
+    private String validate(String element) {
+        if(element.isBlank()) {
+            throw new CustomException(CustomErrorCode.NOT_VALUE);
+        }
+        return element;
     }
 }
