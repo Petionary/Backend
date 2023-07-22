@@ -15,11 +15,9 @@ import lombok.NoArgsConstructor;
 public class Account extends BaseEntity {
 
     @Column(nullable = false)
-    @NotNull
     private String email;
 
     @Column(nullable = false)
-    @NotNull
     private String phone;
 
     @Column(nullable = false)
