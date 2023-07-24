@@ -1,9 +1,6 @@
 package back.petionary.common;
 
-import back.petionary.common.exception.CustomErrorCode;
-import back.petionary.common.exception.CustomException;
 import java.time.LocalDateTime;
-import java.util.Optional;
 import javax.persistence.Column;
 import javax.persistence.EntityListeners;
 import javax.persistence.GeneratedValue;
@@ -31,10 +28,4 @@ public abstract class BaseEntity {
     @LastModifiedBy
     @Column(nullable = true)
     protected LocalDateTime updatedAt;
-
-    protected  <T> T nullValidate(T element) {
-        return Optional.ofNullable(element).orElseThrow(()-> new CustomException(CustomErrorCode.NOT_VALUE));
-    }
-
-
 }
