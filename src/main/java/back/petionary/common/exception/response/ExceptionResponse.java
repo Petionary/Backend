@@ -1,4 +1,4 @@
-package back.petionary.common.exception;
+package back.petionary.common.exception.response;
 
 
 import java.time.LocalDateTime;
@@ -17,14 +17,9 @@ public class ExceptionResponse {
     private final String message;
     private final LocalDateTime time;
 
-    public static ResponseEntity<ExceptionResponse> customExceptionResponse(CustomErrorCode errorCode) {
+    public ResponseEntity<ExceptionResponse> toExceptionResponseEntity() {
         return ResponseEntity
-            .status(errorCode.getStatus())
-            .body(ExceptionResponse.builder()
-                .status(errorCode.getStatus())
-                .message(errorCode.getMessage())
-                .time(LocalDateTime.now())
-                .build()
-            );
+            .status(this.status.value())
+            .body(this);
     }
 }
