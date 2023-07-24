@@ -1,8 +1,6 @@
 package back.petionary.account.entity;
 
-import back.petionary.common.exception.CustomErrorCode;
-import back.petionary.common.exception.CustomException;
-import java.util.Objects;
+import back.petionary.common.util.validation.Validation;
 import javax.persistence.Column;
 import javax.persistence.Embeddable;
 import lombok.Getter;
@@ -20,15 +18,7 @@ public class Address {
     private String detail; //상세주소
 
     public Address(String zipCode, String detail) {
-        this.zipCode = validate(zipCode);
-        this.detail = validate(detail);
-    }
-    private String validate(String element) {
-        if(element == null) {
-            throw new CustomException(CustomErrorCode.NOT_VALUE);
-        }
-        return element;
+        this.zipCode = Validation.validateNull(zipCode);
+        this.detail = Validation.validateNull(detail);
     }
 }
-
-
