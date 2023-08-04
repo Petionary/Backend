@@ -18,7 +18,8 @@ public class Address {
     private String detail; //상세주소
 
     public Address(String zipCode, String detail) {
-        this.zipCode = Validation.validateNull(zipCode);
-        this.detail = Validation.validateNull(detail);
+        Validation.validateNull(zipCode,detail);
+        this.zipCode = zipCode;
+        this.detail = detail;
     }
 }
