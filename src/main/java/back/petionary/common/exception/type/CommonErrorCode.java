@@ -10,6 +10,7 @@ public enum CommonErrorCode {
     NOT_VALUE(HttpStatus.BAD_REQUEST, "값이 존재하지 않습니다."),
     EXCEED_SIZE(HttpStatus.BAD_REQUEST, "범위를 벗어났습니다.");
 
-    private HttpStatus status;
-    private String message;
+    private final HttpStatus status;
+    private final String message;
+
 }
