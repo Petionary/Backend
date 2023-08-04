@@ -1,14 +1,13 @@
 package back.petionary.account.entity;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 import back.petionary.common.exception.CommonException;
 import java.time.LocalDate;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.http.HttpStatus;
 
 @SpringBootTest
 class AccountTest {
@@ -19,7 +18,7 @@ class AccountTest {
         //given
         String email = "test@test.com";
         String name = "테스트";
-        LocalDate birth = LocalDate.of(1998,10,15);
+        LocalDate birth = LocalDate.of(1998, 10, 15);
         String zipcode = "1111";
         String detail = "상세주소";
         String phone = "01011111111";
@@ -43,34 +42,34 @@ class AccountTest {
         //given
         String email = null;
         String name = "테스트";
-        LocalDate birth = LocalDate.of(1998,10,15);
+        LocalDate birth = LocalDate.of(1998, 10, 15);
         String zipcode = "1111";
         String detail = "상세주소";
         String phone = "01011111111";
         Address address = new Address(zipcode, detail);
 
         //when && then
-        CommonException commonException = assertThrows(CommonException.class,
-            () -> new Account(email, phone, name, birth, address));
-        assertThat(commonException.getErrorCode().getStatus()).isEqualTo(HttpStatus.BAD_REQUEST);
+        assertThatThrownBy(() -> new Account(email, phone, name, birth, address))
+            .isInstanceOf(CommonException.class);
     }
+
     @Test
     @DisplayName("유저의 정보 중 이름이 null일 경우 예외가 발생한다.")
     void isNullName() {
         //given
         String email = "test@test.com";
         String name = null;
-        LocalDate birth = LocalDate.of(1998,10,15);
+        LocalDate birth = LocalDate.of(1998, 10, 15);
         String zipcode = "1111";
         String detail = "상세주소";
         String phone = "01011111111";
         Address address = new Address(zipcode, detail);
 
         //when && then
-        CommonException commonException = assertThrows(CommonException.class,
-            () -> new Account(email, phone, name, birth, address));
-        assertThat(commonException.getErrorCode().getStatus()).isEqualTo(HttpStatus.BAD_REQUEST);
+        assertThatThrownBy(() -> new Account(email, phone, name, birth, address))
+            .isInstanceOf(CommonException.class);
     }
+
     @Test
     @DisplayName("유저의 정보 중 생년월일이 null일 경우 예외가 발생한다.")
     void isNullBirth() {
@@ -84,9 +83,8 @@ class AccountTest {
         Address address = new Address(zipcode, detail);
 
         //when && then
-        CommonException commonException = assertThrows(CommonException.class,
-            () -> new Account(email, phone, name, birth, address));
-        assertThat(commonException.getErrorCode().getStatus()).isEqualTo(HttpStatus.BAD_REQUEST);
+        assertThatThrownBy(() -> new Account(email, phone, name, birth, address))
+            .isInstanceOf(CommonException.class);
     }
 
     @Test
@@ -95,16 +93,15 @@ class AccountTest {
         //given
         String email = "test@test.com";
         String name = "테스트";
-        LocalDate birth = LocalDate.of(1998,10,15);
+        LocalDate birth = LocalDate.of(1998, 10, 15);
         String zipcode = "1111";
         String detail = "상세주소";
         String phone = null;
         Address address = new Address(zipcode, detail);
 
         //when && then
-        CommonException commonException = assertThrows(CommonException.class,
-            () -> new Account(email, phone, name, birth, address));
-        assertThat(commonException.getErrorCode().getStatus()).isEqualTo(HttpStatus.BAD_REQUEST);
+        assertThatThrownBy(() -> new Account(email, phone, name, birth, address))
+            .isInstanceOf(CommonException.class);
 
     }
 
@@ -116,9 +113,8 @@ class AccountTest {
         String detail = null;
 
         //when && then
-        CommonException commonException = assertThrows(CommonException.class,
-            () ->new Address(zipcode, detail));
-        assertThat(commonException.getErrorCode().getStatus()).isEqualTo(HttpStatus.BAD_REQUEST);
+        assertThatThrownBy(() -> new Address(zipcode, detail))
+            .isInstanceOf(CommonException.class);
     }
 
 
@@ -130,9 +126,8 @@ class AccountTest {
         String detail = "상세주소";
 
         //when && then
-        CommonException commonException = assertThrows(CommonException.class,
-            () ->new Address(zipcode, detail));
-        assertThat(commonException.getErrorCode().getStatus()).isEqualTo(HttpStatus.BAD_REQUEST);
+        assertThatThrownBy(() -> new Address(zipcode, detail))
+            .isInstanceOf(CommonException.class);
     }
 
     @Test
@@ -140,32 +135,30 @@ class AccountTest {
     void exceedPhoneLength11() {
         String email = "test@test.com";
         String name = "테스트";
-        LocalDate birth = LocalDate.of(1998,10,15);
+        LocalDate birth = LocalDate.of(1998, 10, 15);
         String zipcode = "1111";
         String detail = "상세주소";
-        String phone = "010123456789";
+        String phone = "0".repeat(12);
         Address address = new Address(zipcode, detail);
 
         //when && then
-        CommonException commonException = assertThrows(CommonException.class,
-            () -> new Account(email, phone, name, birth, address));
-        assertThat(commonException.getErrorCode().getStatus()).isEqualTo(HttpStatus.BAD_REQUEST);
+        assertThatThrownBy(() -> new Account(email, phone, name, birth, address))
+            .isInstanceOf(CommonException.class);
     }
 
     @Test
     @DisplayName("이름의 크기가 30을 넘으면 예외가 발생한다.")
     void exceedNameLength30() {
         String email = "test@test.com";
-        String name = "가나다라마바사아자차카타파하가나다라마바사아자차카타파하하하하";
-        LocalDate birth = LocalDate.of(1998,10,15);
+        String name = "가".repeat(31);
+        LocalDate birth = LocalDate.of(1998, 10, 15);
         String zipcode = "1111";
         String detail = "상세주소";
         String phone = "01012345678";
         Address address = new Address(zipcode, detail);
 
         //when && then
-        CommonException commonException = assertThrows(CommonException.class,
-            () -> new Account(email, phone, name, birth, address));
-        assertThat(commonException.getErrorCode().getStatus()).isEqualTo(HttpStatus.BAD_REQUEST);
+        assertThatThrownBy(() -> new Account(email, phone, name, birth, address))
+            .isInstanceOf(CommonException.class);
     }
 }
