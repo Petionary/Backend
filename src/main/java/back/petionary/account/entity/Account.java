@@ -13,15 +13,18 @@ import lombok.NoArgsConstructor;
 @Getter
 @NoArgsConstructor
 @Entity
-public class Account extends BaseEntity{
+public class Account extends BaseEntity {
+
+    private final static int PHONE_SIZE = 11;
+    private final static int NAME_SIZE = 30;
 
     @Column(nullable = false)
     private String email;
 
-    @Column(nullable = false, length = 11)
+    @Column(nullable = false, length = PHONE_SIZE)
     private String phone;
 
-    @Column(nullable = false, length = 30)
+    @Column(nullable = false, length = NAME_SIZE)
     private String name;
 
     @Column(nullable = false)
@@ -31,10 +34,13 @@ public class Account extends BaseEntity{
     private Address address;
 
     public Account(String email, String phone, String name, LocalDate birth, Address address) {
-        this.email = Validation.validateNull(email);
-        this.phone = Validation.validateSize(Validation.validateNull(phone), 11);
-        this.name = Validation.validateSize(Validation.validateNull(name), 30);
-        this.birth = Validation.validateNull(birth);
-        this.address = Validation.validateNull(address);
+        Validation.validateNull(email, phone, name, birth, address);
+        Validation.validateSize(phone, PHONE_SIZE);
+        Validation.validateSize(name, NAME_SIZE);
+        this.email = email;
+        this.phone = phone;
+        this.name = name;
+        this.birth = birth;
+        this.address = address;
     }
 }
