@@ -3,7 +3,6 @@ package back.petionary.account.entity;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
-import back.petionary.common.exception.CommonException;
 import java.time.LocalDate;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -50,7 +49,7 @@ class AccountTest {
 
         //when && then
         assertThatThrownBy(() -> new Account(email, phone, name, birth, address))
-            .isInstanceOf(CommonException.class);
+            .isInstanceOf(IllegalArgumentException.class);
     }
 
     @Test
@@ -67,7 +66,7 @@ class AccountTest {
 
         //when && then
         assertThatThrownBy(() -> new Account(email, phone, name, birth, address))
-            .isInstanceOf(CommonException.class);
+            .isInstanceOf(IllegalArgumentException.class);
     }
 
     @Test
@@ -84,7 +83,7 @@ class AccountTest {
 
         //when && then
         assertThatThrownBy(() -> new Account(email, phone, name, birth, address))
-            .isInstanceOf(CommonException.class);
+            .isInstanceOf(IllegalArgumentException.class);
     }
 
     @Test
@@ -101,7 +100,7 @@ class AccountTest {
 
         //when && then
         assertThatThrownBy(() -> new Account(email, phone, name, birth, address))
-            .isInstanceOf(CommonException.class);
+            .isInstanceOf(IllegalArgumentException.class);
 
     }
 
@@ -114,7 +113,7 @@ class AccountTest {
 
         //when && then
         assertThatThrownBy(() -> new Address(zipcode, detail))
-            .isInstanceOf(CommonException.class);
+            .isInstanceOf(IllegalArgumentException.class);
     }
 
 
@@ -127,7 +126,7 @@ class AccountTest {
 
         //when && then
         assertThatThrownBy(() -> new Address(zipcode, detail))
-            .isInstanceOf(CommonException.class);
+            .isInstanceOf(IllegalArgumentException.class);
     }
 
     @Test
@@ -143,7 +142,7 @@ class AccountTest {
 
         //when && then
         assertThatThrownBy(() -> new Account(email, phone, name, birth, address))
-            .isInstanceOf(CommonException.class);
+            .isInstanceOf(IllegalArgumentException.class);
     }
 
     @Test
@@ -159,6 +158,6 @@ class AccountTest {
 
         //when && then
         assertThatThrownBy(() -> new Account(email, phone, name, birth, address))
-            .isInstanceOf(CommonException.class);
+            .isInstanceOf(IllegalArgumentException.class);
     }
 }
