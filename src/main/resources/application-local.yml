@@ -11,3 +11,6 @@ spring:
       hibernate:
         format_sql: true
         show_sql: true
+  redis:
+    host: test
+    port: 6380
