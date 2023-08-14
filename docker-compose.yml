@@ -1,0 +1,18 @@
+version: '3'
+services:
+  database :
+    image : mysql
+    environment:
+      MYSQL_DATABASE : test
+      MYSQL_USER : test
+      MYSQL_PASSWORD : test
+      MYSQL_ROOT_HOST: '%'
+      MYSQL_ROOT_PASSWORD : root
+    ports :
+      - "3309:3306"
+  redis :
+    image : redis:latest
+    container_name: petionary_redis
+    hostname: test
+    ports :
+      - "6380:6379"
