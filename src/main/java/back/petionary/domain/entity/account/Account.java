@@ -1,9 +1,8 @@
-package back.petionary.account.entity;
+package back.petionary.domain.entity.account;
 
 import back.petionary.common.BaseEntity;
 import back.petionary.common.util.validation.Validation;
 import java.time.LocalDate;
-import javax.annotation.PostConstruct;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import lombok.Getter;
