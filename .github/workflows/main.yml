@@ -20,10 +20,5 @@ jobs :
       run : chmod +x ./gradlew
     - name : Build with Gradle
       run : ./gradlew clean build
-    - name : Set up Mysql 8.0
-      uses: samin/mysql-action@v1
-      with:
-        character set server: 'utf8'
-        mysql database : test
-        mysql username : test
-        mysql password : test
+    - name : Start Docker
+      run : docker-compose up
