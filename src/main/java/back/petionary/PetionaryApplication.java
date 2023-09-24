@@ -9,7 +9,7 @@ import org.springframework.data.jpa.repository.config.EnableJpaAuditing;
 public class PetionaryApplication {
 
     public static void main(String[] args) {
-        System.out.println("젠킨스 테스트중입니다.");a
+        System.out.println("젠킨스 테스트중입니다ㅁ.");
         SpringApplication.run(PetionaryApplication.class, args);
     }
 
