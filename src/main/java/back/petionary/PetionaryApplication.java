@@ -9,6 +9,7 @@ import org.springframework.data.jpa.repository.config.EnableJpaAuditing;
 public class PetionaryApplication {
 
     public static void main(String[] args) {
+        System.out.println("젠킨스 텟트");
         SpringApplication.run(PetionaryApplication.class, args);
     }
 
