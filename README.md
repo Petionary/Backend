@@ -6,12 +6,17 @@
 그래서 해당 프로젝트는 반려동물을 키우는 가구들을 위해 반려동물과 동반할 수 있는 카페, 음식점, 호텔 쉽게 찾을 수 있게 도와주는 서비스입니다.
 
 ## 기술 스택
+### 언어
 - Java
+- Spring Boot
+- Spring Security
 - Spring Data JPA
 - MySQL
-- Spring Security
 - Redis
 - OAuth2.0
+- AWS EC2
+- Jenkins
+
 
 
 ## 지라연동 테스트
