@@ -4,7 +4,7 @@ import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 
-@Getter
+@Gettera
 @RequiredArgsConstructor
 public enum ErrorCode {
     NOT_FOUND(HttpStatus.NOT_FOUND,"찾을 수 없습니다.");
