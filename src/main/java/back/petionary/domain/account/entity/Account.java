@@ -1,4 +1,4 @@
-package back.petionary.domain.entity.account;
+package back.petionary.domain.account.entity;
 
 import back.petionary.common.BaseEntity;
 import back.petionary.common.util.validation.Validation;
@@ -20,17 +20,16 @@ public class Account extends BaseEntity {
     @Column(nullable = false)
     private String email;
 
-    @Column(nullable = false, length = PHONE_SIZE)
     private String phone;
 
     @Column(nullable = false, length = NAME_SIZE)
     private String name;
 
-    @Column(nullable = false)
     private LocalDate birth;
 
-    @Column(nullable = false)
     private Address address;
+
+    private String role;
 
     public Account(String email, String phone, String name, LocalDate birth, Address address) {
         Validation.validateNull(email, phone, name, birth, address);
@@ -41,5 +40,12 @@ public class Account extends BaseEntity {
         this.name = name;
         this.birth = birth;
         this.address = address;
+        this.role = "ROLE_KAKAO";
+    }
+
+    public Account(String email, String name) {
+        this.email = email;
+        this.name = name;
+        this.role = "ROLE_KAKAO";
     }
 }
