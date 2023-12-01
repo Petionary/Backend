@@ -5,11 +5,15 @@ import back.petionary.common.util.validation.Validation;
 import java.time.LocalDate;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 
 @Getter
+@Setter
 @NoArgsConstructor
 @Entity
 public class Account extends BaseEntity {
@@ -27,19 +31,21 @@ public class Account extends BaseEntity {
 
     private LocalDate birth;
 
-    private Address address;
+    //private Address address;
 
     private String role;
 
-    public Account(String email, String phone, String name, LocalDate birth, Address address) {
-        Validation.validateNull(email, phone, name, birth, address);
+    private String nickName;
+
+    public Account(String email, String phone, String name, LocalDate birth, String nickName) {
+        Validation.validateNull(email, phone, name, birth);
         Validation.validateSize(phone, PHONE_SIZE);
         Validation.validateSize(name, NAME_SIZE);
         this.email = email;
         this.phone = phone;
         this.name = name;
         this.birth = birth;
-        this.address = address;
+        this.nickName = nickName;
         this.role = "ROLE_KAKAO";
     }
 
