@@ -86,7 +86,7 @@ public class SocialLoginService {
 
         session.setAttribute("email" , email);
 
-        Account kakaoUser = new AccountRequest(email,userName).kakaoOAuthToEntity();
+        Account kakaoUser = new AccountRequest(email,userName).createKakaoAccount();
 
         if (!accountRepository.existsByEmail(kakaoUser.getEmail())) {
             accountRepository.save(kakaoUser);

@@ -23,18 +23,6 @@ class AccountTest {
         String zipcode = "1111";
         String detail = "상세주소";
         String phone = "01011111111";
-//        Address address = new Address(zipcode, detail);
-//
-//        //when
-//        Account account = new Account(email, phone, name, birth, address);
-//
-//        //then
-//        assertThat(account.getEmail()).isEqualTo(email);
-//        assertThat(account.getName()).isEqualTo(name);
-//        assertThat(account.getBirth()).isEqualTo(birth);
-//        assertThat(account.getAddress().getZipCode()).isEqualTo(zipcode);
-//        assertThat(account.getAddress().getDetail()).isEqualTo(detail);
-//        assertThat(account.getPhone()).isEqualTo(phone);
     }
 
     @Test
@@ -47,11 +35,6 @@ class AccountTest {
         String zipcode = "1111";
         String detail = "상세주소";
         String phone = "01011111111";
-//        Address address = new Address(zipcode, detail);
-//
-//        //when && then
-//        assertThatThrownBy(() -> new Account(email, phone, name, birth, address))
-//            .isInstanceOf(IllegalArgumentException.class);
     }
 
     @Test
@@ -64,11 +47,6 @@ class AccountTest {
         String zipcode = "1111";
         String detail = "상세주소";
         String phone = "01011111111";
-//        Address address = new Address(zipcode, detail);
-//
-//        //when && then
-//        assertThatThrownBy(() -> new Account(email, phone, name, birth, address))
-//            .isInstanceOf(IllegalArgumentException.class);
     }
 
     @Test
@@ -81,11 +59,6 @@ class AccountTest {
         String zipcode = "1111";
         String detail = "상세주소";
         String phone = "01011111111";
-//        Address address = new Address(zipcode, detail);
-//
-//        //when && then
-//        assertThatThrownBy(() -> new Account(email, phone, name, birth, address))
-//            .isInstanceOf(IllegalArgumentException.class);
     }
 
     @Test
@@ -98,24 +71,13 @@ class AccountTest {
         String zipcode = "1111";
         String detail = "상세주소";
         String phone = null;
-//        Address address = new Address(zipcode, detail);
-//
-//        //when && then
-//        assertThatThrownBy(() -> new Account(email, phone, name, birth, address))
-//            .isInstanceOf(IllegalArgumentException.class);
-
     }
 
     @Test
     @DisplayName("유저의 정보 중 상세주소가 null일 경우 예외가 발생한다.")
     void isNullDetail() {
-        //given
         String zipcode = "1111";
         String detail = null;
-
-        //when && then
-        //assertThatThrownBy(() -> new Address(zipcode, detail))
-        //    .isInstanceOf(IllegalArgumentException.class);
     }
 
 
@@ -125,10 +87,6 @@ class AccountTest {
         //given
         String zipcode = null;
         String detail = "상세주소";
-
-        //when && then
-//        assertThatThrownBy(() -> new Address(zipcode, detail))
-//            .isInstanceOf(IllegalArgumentException.class);
     }
 
     @Test
@@ -140,11 +98,6 @@ class AccountTest {
         String zipcode = "1111";
         String detail = "상세주소";
         String phone = "0".repeat(12);
-//        Address address = new Address(zipcode, detail);
-//
-//        //when && then
-//        assertThatThrownBy(() -> new Account(email, phone, name, birth, address))
-//            .isInstanceOf(IllegalArgumentException.class);
     }
 
     @Test
@@ -156,10 +109,5 @@ class AccountTest {
         String zipcode = "1111";
         String detail = "상세주소";
         String phone = "01012345678";
-//        Address address = new Address(zipcode, detail);
-//
-//        //when && then
-//        assertThatThrownBy(() -> new Account(email, phone, name, birth, address))
-//            .isInstanceOf(IllegalArgumentException.class);
     }
 }

@@ -13,7 +13,6 @@ import lombok.Setter;
 
 
 @Getter
-@Setter
 @NoArgsConstructor
 @Entity
 public class Account extends BaseEntity {

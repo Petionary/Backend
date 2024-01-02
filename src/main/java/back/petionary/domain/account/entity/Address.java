@@ -1,19 +1,18 @@
 package back.petionary.domain.account.entity;
 import javax.persistence.*;
 
-import lombok.Getter;
+import back.petionary.common.BaseEntity;
 import lombok.NoArgsConstructor;
 
 @NoArgsConstructor
-@Getter
 @Entity
-public class Address {
+public class Address extends BaseEntity {
 
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
     private Long id;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     private Account account;
 
     private String area; // 지역 : 서울특별시

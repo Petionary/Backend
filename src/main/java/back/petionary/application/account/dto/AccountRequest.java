@@ -5,7 +5,6 @@ import lombok.Getter;
 import lombok.Setter;
 
 @Getter
-@Setter
 public class AccountRequest {
 
     private String email;
@@ -17,7 +16,7 @@ public class AccountRequest {
         this.userName = userName;
     }
 
-    public Account kakaoOAuthToEntity() {
+    public Account createKakaoAccount() {
         return new Account(this.email, this.userName);
     }
 }
