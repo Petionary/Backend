@@ -8,11 +8,6 @@ import org.springframework.stereotype.Component;
 @Getter
 public class Config {
 
-    //@Bean
-//    public RestTemplate restTemplate() {
-//        return new RestTemplate();
-//    }
-
     @Value("${spring.security.oauth2.client.registration.client-id}")
     private String KAKAO_CLIENT_ID;
 

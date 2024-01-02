@@ -3,9 +3,11 @@ import javax.persistence.*;
 
 import back.petionary.common.BaseEntity;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 @NoArgsConstructor
 @Entity
+@Setter
 public class Address extends BaseEntity {
 
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -19,42 +21,12 @@ public class Address extends BaseEntity {
 
     private String address; //주소 : 송파구
 
-    public Address(Long id, Account account, String area, String address) {
-        this.id = id;
+
+
+    public Address(Account account, String area, String address) {
         this.account = account;
         this.area = area;
         this.address = address;
     }
 
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public Account getAccount() {
-        return account;
-    }
-
-    public void setAccount(Account account) {
-        this.account = account;
-    }
-
-    public String getArea() {
-        return area;
-    }
-
-    public void setArea(String area) {
-        this.area = area;
-    }
-
-    public String getAddress() {
-        return address;
-    }
-
-    public void setAddress(String address) {
-        this.address = address;
-    }
 }

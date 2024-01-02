@@ -26,27 +26,16 @@ public class AddressService {
         List<AddressDetails> addressDetails = addressRequest.getAddressDetails();
 
         for (AddressDetails addressDetail : addressDetails) {
-            Address address = new Address();
-            address.setArea(addressDetail.getArea());
-            address.setAddress(addressDetail.getAddress());
-            address.setAccount(account);
+            Address address = new Address(account, addressDetail.getArea(), addressDetail.getAddress());
             addressRepository.save(address);
         }
-        account.setNickName(addressRequest.getNickName());
+        account.createNickName(addressRequest.getNickName());
         accountRepository.save(account);
-
-
-//        Address address = new Address();
-//        address.setArea(addressRequest.getArea());
-//        address.setAddress(addressRequest.getAddress());
-//        account.setNickName(addressRequest.getNickName());
-//        address.setAccount(account);
-//        addressRepository.save(address);
-//        accountRepository.save(account);
-//        return "성공";
 
         return "성공";
 
     }
+
+
 
 }

@@ -13,6 +13,7 @@ import lombok.Setter;
 
 
 @Getter
+@Setter
 @NoArgsConstructor
 @Entity
 public class Account extends BaseEntity {
@@ -29,8 +30,6 @@ public class Account extends BaseEntity {
     private String name;
 
     private LocalDate birth;
-
-    //private Address address;
 
     private String role;
 
@@ -52,5 +51,9 @@ public class Account extends BaseEntity {
         this.email = email;
         this.name = name;
         this.role = "ROLE_KAKAO";
+    }
+
+    public void createNickName(String nickName) {
+        this.nickName = nickName;
     }
 }

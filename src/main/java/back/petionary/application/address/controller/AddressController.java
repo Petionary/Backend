@@ -14,7 +14,7 @@ public class AddressController {
 
     private final AddressService addressService;
 
-    @PostMapping("/setUserInfo")
+    @PostMapping("/update-user-info")
     public String setUserInfo(@RequestBody AddressRequest addressRequest) {
         return addressService.setUserInfo(addressRequest);
     }
