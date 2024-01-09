@@ -35,7 +35,4 @@ public class OpenApiController {
     public String kakaoLogout(HttpSession session){
         return socialLoginService.logout(session);
     }
-
-
-
 }

@@ -9,15 +9,9 @@ public class AddressDetails {
         return area;
     }
 
-    public void setArea(String area) {
-        this.area = area;
-    }
-
     public String getAddress() {
         return address;
     }
 
-    public void setAddress(String address) {
-        this.address = address;
-    }
+
 }
