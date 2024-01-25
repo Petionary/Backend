@@ -13,7 +13,6 @@ import lombok.Setter;
 
 
 @Getter
-@Setter
 @NoArgsConstructor
 @Entity
 public class Account extends BaseEntity {
@@ -35,6 +34,8 @@ public class Account extends BaseEntity {
 
     private String nickName;
 
+    private String image;
+
     public Account(String email, String phone, String name, LocalDate birth, String nickName) {
         Validation.validateNull(email, phone, name, birth);
         Validation.validateSize(phone, PHONE_SIZE);
@@ -55,5 +56,10 @@ public class Account extends BaseEntity {
 
     public void createNickName(String nickName) {
         this.nickName = nickName;
+    }
+
+    public void updateAccountInfo(String phone, String image){
+        this.phone = phone;
+        this.image = image;
     }
 }

@@ -6,6 +6,7 @@ import lombok.*;
 @Getter
 @NoArgsConstructor
 @AllArgsConstructor
+@ToString
 public class LoginResponseDto {
     @JsonProperty("token_type")
     private String tokenType;

@@ -1,5 +1,7 @@
 package back.petionary.application.account.service;
 
+import back.petionary.application.account.dto.AccountResponse;
+import back.petionary.application.account.dto.LoginResponseDto;
 import back.petionary.configuration.Config;
 import back.petionary.domain.account.entity.Account;
 import back.petionary.application.account.dto.AccountRequest;
@@ -9,6 +11,7 @@ import back.petionary.security.oauth.provider.TokenProvider;
 import lombok.RequiredArgsConstructor;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
+import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.*;
 import org.springframework.http.client.ClientHttpResponse;
 import org.springframework.http.client.HttpComponentsClientHttpRequestFactory;
@@ -31,14 +34,12 @@ import java.util.*;
 @Service
 @RequiredArgsConstructor
 public class SocialLoginService {
-
     private final TokenProvider tokenProvider;
     private final AccountRepository accountRepository;
     private final Config config;
 
 
-
-    public MultiValueMap<String, String> accessTokenParams(String grantType, String clientId,String code,String redirect_uri) {
+    private MultiValueMap<String, String> accessTokenParams(String grantType, String clientId, String code, String redirect_uri) {
         MultiValueMap<String, String> params = new LinkedMultiValueMap<>();
         params.add("grant_type", grantType);
         params.add("client_id", clientId);
@@ -49,54 +50,101 @@ public class SocialLoginService {
     }
 
 
-
     @Transactional
-    public void getKakaoAccessToken(String code, HttpServletResponse res, HttpSession session){
-    RestTemplate rt = new RestTemplate();
-    rt.setRequestFactory(new HttpComponentsClientHttpRequestFactory());
-    rt.setErrorHandler(new DefaultResponseErrorHandler() {
-        public boolean hasError(ClientHttpResponse response) throws IOException {
-            HttpStatus statusCode = response.getStatusCode();
-            return statusCode.series() == HttpStatus.Series.SERVER_ERROR;
+    public void getKakaoAccessToken(String code, HttpServletResponse res, HttpSession session) {
+        RestTemplate rt = new RestTemplate();
+        System.out.println("================");
+        rt.setRequestFactory(new HttpComponentsClientHttpRequestFactory());
+        rt.setErrorHandler(new DefaultResponseErrorHandler() {
+            public boolean hasError(ClientHttpResponse response) throws IOException {
+                HttpStatus statusCode = response.getStatusCode();
+                return statusCode.series() == HttpStatus.Series.SERVER_ERROR;
+            }
+        });
+
+        HttpHeaders httpHeaders = new HttpHeaders();
+        httpHeaders.add("Content-type", "application/x-www-form-urlencoded;charset=utf-8");
+
+        MultiValueMap<String, String> params = accessTokenParams("authorization_code", config.getKAKAO_CLIENT_ID(), code, config.getKAKAO_REDIRECT_URI());
+        HttpEntity<MultiValueMap<String, String>> accessTokenRequest = new HttpEntity<>(params, httpHeaders);
+//    ResponseEntity<String> accessTokenResponse = rt.exchange(config.getKAKAO_TOKEN_URI(), HttpMethod.POST, accessTokenRequest, String.class);
+        ResponseEntity<LoginResponseDto> accessTokenResponse = rt.exchange(config.getKAKAO_TOKEN_URI(), HttpMethod.POST, accessTokenRequest, new ParameterizedTypeReference<LoginResponseDto>() {
+        });
+        System.out.println("accessTokenResponse = " + accessTokenResponse);
+        System.out.println("1111================");
+        try {
+            LoginResponseDto loginResponseDto = accessTokenResponse.getBody();
+            session.setAttribute("Authorization", loginResponseDto.getAccessToken());
+            String header = "Bearer " + loginResponseDto.getAccessToken();
+            Map<String, String> requestHeaders = new HashMap<>();
+            requestHeaders.put("Authorization", header);
+            ResponseEntity<AccountResponse> accountResponseEntity = rt.exchange(
+                    config.getKAKAO_USER_INFO_URI(),
+                    HttpMethod.GET,
+                    new HttpEntity<>(httpHeaders),
+                    AccountResponse.class
+            );
+
+            System.out.println("2222================");
+            AccountResponse profile = accountResponseEntity.getBody();
+            AccountResponse.Kakaoproperties kakaoproperties = profile.getProperties();
+            AccountResponse.KakaoAccount kakaoAccount = profile.getKakaoAccount();
+            System.out.println("profile = " + profile);
+            AccountResponse.KakaoAccount kakaoAccount1 = null;
+            if (profile != null) {
+                kakaoAccount1 = profile.getKakaoAccount();
+            }
+            if (kakaoAccount1 != null) {
+                String email = kakaoAccount.getEmail();
+                String userName = kakaoproperties.getNickname();
+
+                session.setAttribute("email", email);
+
+                Account kakaoUser = new AccountRequest(email, userName).createKakaoAccount();
+
+                if (!accountRepository.existsByEmail(kakaoUser.getEmail())) {
+                    accountRepository.save(kakaoUser);
+                }
+
+                String accessToken = tokenProvider.create(new PrincipalDetails(kakaoUser));
+                res.setHeader("Authorization", "Bearer " + accessToken);
+            }
+
+//        String email = kakaoAccount.getEmail();
+//        String userName = kakaoproperties.getNickname();
+//
+//        session.setAttribute("email" , email);
+
+
+            //JSONParser jsonParser = new JSONParser();
+            //JSONObject jsonObject = (JSONObject) jsonParser.parse(accessTokenResponse.getBody());
+
+//        session.setAttribute("Authorization", jsonObject.get("access_token"));
+//        String header = "Bearer " + jsonObject.get("access_token");
+
+//        Map<String, String> requestHeaders = new HashMap<>();
+//        requestHeaders.put("Authorization", header);
+//        String responseBody = get(config.getKAKAO_USER_INFO_URI(), requestHeaders);
+//        JSONObject profile = (JSONObject) jsonParser.parse(responseBody);
+//        JSONObject properties = (JSONObject) profile.get("properties");
+//        JSONObject kakao_account = (JSONObject) profile.get("kakao_account");
+
+//        String email = (String) kakao_account.get("email");
+//        String userName = (String) properties.get("nickname");
+
+//        session.setAttribute("email" , email);
+
+//        Account kakaoUser = new AccountRequest(email,userName).createKakaoAccount();
+
+//        if (!accountRepository.existsByEmail(kakaoUser.getEmail())) {
+//            accountRepository.save(kakaoUser);
+//        }
+//        String access_token = tokenProvider.create(new PrincipalDetails(kakaoUser));
+//        res.setHeader("Authorization", "Bearer "+access_token);
+
+        } catch (Exception e) {
+            e.printStackTrace();
         }
-    });
-
-    HttpHeaders httpHeaders = new HttpHeaders();
-    httpHeaders.add("Content-type", "application/x-www-form-urlencoded;charset=utf-8");
-
-    MultiValueMap<String, String> params = accessTokenParams("authorization_code", config.getKAKAO_CLIENT_ID(), code, config.getKAKAO_REDIRECT_URI());
-    HttpEntity<MultiValueMap<String, String>> accessTokenRequest = new HttpEntity<>(params, httpHeaders);
-    ResponseEntity<String> accessTokenResponse = rt.exchange(config.getKAKAO_TOKEN_URI(), HttpMethod.POST, accessTokenRequest, String.class);
-    try {
-        JSONParser jsonParser = new JSONParser();
-        JSONObject jsonObject = (JSONObject) jsonParser.parse(accessTokenResponse.getBody());
-
-        session.setAttribute("Authorization", jsonObject.get("access_token"));
-        String header = "Bearer " + jsonObject.get("access_token");
-
-        Map<String, String> requestHeaders = new HashMap<>();
-        requestHeaders.put("Authorization", header);
-        String responseBody = get(config.getKAKAO_USER_INFO_URI(), requestHeaders);
-        JSONObject profile = (JSONObject) jsonParser.parse(responseBody);
-        JSONObject properties = (JSONObject) profile.get("properties");
-        JSONObject kakao_account = (JSONObject) profile.get("kakao_account");
-
-        String email = (String) kakao_account.get("email");
-        String userName = (String) properties.get("nickname");
-
-        session.setAttribute("email" , email);
-
-        Account kakaoUser = new AccountRequest(email,userName).createKakaoAccount();
-
-        if (!accountRepository.existsByEmail(kakaoUser.getEmail())) {
-            accountRepository.save(kakaoUser);
-        }
-        String access_token = tokenProvider.create(new PrincipalDetails(kakaoUser));
-        res.setHeader("Authorization", "Bearer "+access_token);
-
-    } catch (Exception e) {
-        e.printStackTrace();
-    }
     }
 
     private static String get(String apiUrl, Map<String, String> requestHeaders) {
@@ -132,18 +180,18 @@ public class SocialLoginService {
         }
     }
 
-    public String logout( HttpSession session) {
+    public String logout(HttpSession session) {
         String email = (String) session.getAttribute("email");
-        String role = accountRepository.findByEmail(email).get().getRole();
+        String role = accountRepository.findByEmail(email).orElseThrow(() -> new IllegalArgumentException("email doesn't exist")).getRole();
         if (role.equals("ROLE_KAKAO")) {
-            String access_token = (String) session.getAttribute("Authorization");
-            if (access_token != null && !"".equals(access_token)) {
+            String accessToken = (String) session.getAttribute("Authorization");
+            if (accessToken != null && !"".equals(accessToken)) {
                 HttpURLConnection connect = connect("https://kapi.kakao.com/v1/user/logout");
-                try(InputStream inputStream = connect.getInputStream()) {
+                try (InputStream inputStream = connect.getInputStream()) {
                     connect.setRequestMethod("POST");
-                    connect.setRequestProperty("Authorization", "Bearer " + access_token);
+                    connect.setRequestProperty("Authorization", "Bearer " + accessToken);
                     readBody(inputStream);
-                }catch (IOException pe) {
+                } catch (IOException pe) {
                     pe.printStackTrace();
                 }
                 session.removeAttribute("access_token");
@@ -168,5 +216,7 @@ public class SocialLoginService {
             throw new RuntimeException("API 응답을 읽는데 실패했습니다.", e);
         }
     }
+
+
 }
 

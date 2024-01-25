@@ -8,7 +8,6 @@ import org.springframework.stereotype.Component;
 @Component
 @Getter
 public class Config {
-
     @Value("${spring.security.oauth2.client.registration.client-id}")
     private String KAKAO_CLIENT_ID;
 
@@ -22,8 +21,4 @@ public class Config {
 
     @Value("${spring.security.oauth2.client.provider.kakao.user-info-uri}")
     private String KAKAO_USER_INFO_URI;
-
-
-
-
 }
