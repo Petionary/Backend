@@ -1,4 +1,4 @@
-package back.petionary.account.entity;
+package back.petionary.domain.account.entity;
 
 import back.petionary.common.util.validation.Validation;
 import javax.persistence.Column;
