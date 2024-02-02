@@ -13,13 +13,13 @@ public class MypageController {
     private final MypageService mypageService;
 
     @GetMapping("/{id}")
-    public MypageAccountInfoResponse mypageAccountInfoResponse(@PathVariable Long id){
-        return mypageService.mypageAccountInfoResponse(id);
+    public MypageAccountInfoResponse findAccountInfo(@PathVariable Long id){
+        return mypageService.findAccountInfo(id);
     }
 
     @PutMapping("/{id}")
     public String updateAccountInfo(@PathVariable Long id, @RequestBody MypageAccountInfoRequest mypageAccountInfoRequest) {
-        return mypageService.mypageUpdateAccountInfo(id, mypageAccountInfoRequest);
+        return mypageService.updateAccountInfo(id, mypageAccountInfoRequest);
     }
 
     @DeleteMapping("/{id}")

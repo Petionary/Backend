@@ -20,7 +20,7 @@ public class MypageService {
         return new MypageAccountInfoResponse(account.getId(), account.getNickName(), account.getPhone(), account.getImage());
     }
 
-    public String mypageUpdateAccountInfo(Long accountId, MypageAccountInfoRequest mypageAccountInfoRequest) {
+    public String updateAccountInfo(Long accountId, MypageAccountInfoRequest mypageAccountInfoRequest) {
         Account account = accountRepository.findById(accountId).orElseThrow(() -> new PetionaryException("Account not found with id: " + accountId));
         account.updateAccountInfo(mypageAccountInfoRequest.getPhoneNumber(), mypageAccountInfoRequest.getImage());
         return "업데이트 성공";
