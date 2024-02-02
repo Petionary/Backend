@@ -8,20 +8,21 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequiredArgsConstructor
+@RequestMapping("/mypage")
 public class MypageController {
     private final MypageService mypageService;
 
-    @GetMapping("/mypage-account-info-response/{id}")
+    @GetMapping("/{id}")
     public MypageAccountInfoResponse mypageAccountInfoResponse(@PathVariable Long id){
         return mypageService.mypageAccountInfoResponse(id);
     }
 
-    @PutMapping("/mypage-update-account-info/{id}")
+    @PutMapping("/{id}")
     public String mypageUpdateUserInfo(@PathVariable Long id, @RequestBody MypageAccountInfoRequest mypageAccountInfoRequest) {
         return mypageService.mypageUpdateAccountInfo(id, mypageAccountInfoRequest);
     }
 
-    @DeleteMapping("/mypage-delete/{id}")
+    @DeleteMapping("/{id}")
     public String accountWithdrawal(@PathVariable Long id) {
         return mypageService.accountWithdrawal(id);
     }
