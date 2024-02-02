@@ -18,7 +18,7 @@ public class MypageController {
     }
 
     @PutMapping("/{id}")
-    public String mypageUpdateUserInfo(@PathVariable Long id, @RequestBody MypageAccountInfoRequest mypageAccountInfoRequest) {
+    public String updateAccountInfo(@PathVariable Long id, @RequestBody MypageAccountInfoRequest mypageAccountInfoRequest) {
         return mypageService.mypageUpdateAccountInfo(id, mypageAccountInfoRequest);
     }
 

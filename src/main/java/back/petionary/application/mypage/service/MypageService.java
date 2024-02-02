@@ -15,7 +15,7 @@ import org.springframework.transaction.annotation.Transactional;
 public class MypageService {
     private final AccountRepository accountRepository;
 
-    public MypageAccountInfoResponse mypageAccountInfoResponse(Long accountId) {
+    public MypageAccountInfoResponse findAccountInfo(Long accountId) {
         Account account = accountRepository.findById(accountId).orElseThrow(() -> new PetionaryException("Account not found with id: " + accountId));
         return new MypageAccountInfoResponse(account.getId(), account.getNickName(), account.getPhone(), account.getImage());
     }
