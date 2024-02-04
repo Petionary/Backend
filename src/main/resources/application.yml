@@ -1,4 +1,7 @@
 spring:
+  mvc:
+    pathmatch:
+      matching-strategy: ant_path_matcher
   datasource:
     url: ${MYSQL_URL}
     username: ${MYSQL_USERNAME}
@@ -7,7 +10,7 @@ spring:
 
   jpa:
     hibernate:
-      ddl-auto: create-drop
+      ddl-auto: update
     properties:
       hibernate:
         format_sql: true
@@ -30,6 +33,3 @@ spring:
           scope:
             - profile_nickname
             - account_email
-
-        url:
-          base: http://localhost:8080
