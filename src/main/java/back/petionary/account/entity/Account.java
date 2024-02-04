@@ -10,6 +10,7 @@ import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
 
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -34,6 +35,9 @@ public class Account extends BaseEntity {
     @Column(nullable = false)
     private LocalDate birth;
 
+//    @Column(nullable = false)
+//    private String picture;
+
     @Column(nullable = false)
     private Address address;
 
@@ -41,6 +45,7 @@ public class Account extends BaseEntity {
     @Column(nullable = false)
     private MyRole role;
 
+    @Builder
     public Account(String email, String phone, String name, LocalDate birth, Address address, MyRole role) {
         Validation.validateNull(email, phone, name, birth, address, role);
         Validation.validateSize(phone, PHONE_SIZE);
@@ -55,5 +60,10 @@ public class Account extends BaseEntity {
 
     public String getRoleKey(){
         return this.role.getKey();
+    }
+
+    public Account update(String name) {
+        this.name = name;
+        return this;
     }
 }
