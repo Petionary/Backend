@@ -1,18 +1,17 @@
-package back.petionary.account.entity;
+package back.petionary.domain.account.entity;
 
-import back.petionary.account.MyRole;
 import back.petionary.common.BaseEntity;
 import back.petionary.common.util.validation.Validation;
 import java.time.LocalDate;
-import javax.annotation.PostConstruct;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import back.petionary.domain.account.MyRole;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
 
 import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
 
 
 @Getter
@@ -34,6 +33,10 @@ public class Account extends BaseEntity {
 
     @Column(nullable = false)
     private LocalDate birth;
+
+    private String nickName;
+
+    private String image;
 
 //    @Column(nullable = false)
 //    private String picture;
@@ -58,6 +61,16 @@ public class Account extends BaseEntity {
         this.role = role;
     }
 
+    public Account(String email, String phone, String name, LocalDate birth) {
+        Validation.validateNull(email, phone, name, birth);
+        Validation.validateSize(phone, PHONE_SIZE);
+        Validation.validateSize(name, NAME_SIZE);
+        this.email = email;
+        this.phone = phone;
+        this.name = name;
+        this.birth = birth;
+    }
+
     public String getRoleKey(){
         return this.role.getKey();
     }
@@ -65,5 +78,14 @@ public class Account extends BaseEntity {
     public Account update(String name) {
         this.name = name;
         return this;
+    }
+
+    public void createNickName(String nickName) {
+        this.nickName = nickName;
+    }
+
+    public void updateAccountInfo(String phone, String image){
+        this.phone = phone;
+        this.image = image;
     }
 }

@@ -1,4 +1,4 @@
-package back.petionary.account;
+package back.petionary.domain.account;
 
 import back.petionary.common.util.validation.Validation;
 import lombok.Getter;

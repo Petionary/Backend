@@ -5,7 +5,9 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 import java.time.LocalDate;
 
-import back.petionary.account.MyRole;
+import back.petionary.domain.account.MyRole;
+import back.petionary.domain.account.entity.Account;
+import back.petionary.domain.account.entity.Address;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -70,7 +72,7 @@ class AccountTest {
         MyRole role = MyRole.USER;
 
         //when && then
-        assertThatThrownBy(() -> new Account(email, phone, name, birth, address, role))
+        assertThatThrownBy(() -> new Account.Account(email, phone, name, birth, address, role))
             .isInstanceOf(IllegalArgumentException.class);
     }
 

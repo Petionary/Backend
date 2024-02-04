@@ -1,7 +1,7 @@
 package back.petionary.config.oauth;
 
-import back.petionary.account.entity.Account;
-import back.petionary.account.repository.AccountRepository;
+import back.petionary.domain.account.entity.Account;
+import back.petionary.domain.account.repository.AccountRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.oauth2.client.userinfo.DefaultOAuth2UserService;
