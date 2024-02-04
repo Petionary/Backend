@@ -1,13 +1,11 @@
 package back.petionary.domain.account.entity;
 
-import back.petionary.application.address.dto.AddressDetails;
 import back.petionary.common.BaseEntity;
-import jakarta.persistence.*;
+import javax.persistence.Embeddable;
+import javax.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import org.springframework.data.annotation.Id;
-
-import java.util.List;
 
 @NoArgsConstructor
 @Getter

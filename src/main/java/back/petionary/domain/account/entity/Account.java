@@ -3,9 +3,8 @@ package back.petionary.domain.account.entity;
 import back.petionary.common.BaseEntity;
 import back.petionary.common.util.validation.Validation;
 import java.time.LocalDate;
-
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
+import javax.persistence.Column;
+import javax.persistence.Entity;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
