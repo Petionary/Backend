@@ -72,7 +72,7 @@ class AccountTest {
         MyRole role = MyRole.USER;
 
         //when && then
-        assertThatThrownBy(() -> new Account.Account(email, phone, name, birth, address, role))
+        assertThatThrownBy(() -> new Account(email, phone, name, birth, address, role))
             .isInstanceOf(IllegalArgumentException.class);
     }
 
