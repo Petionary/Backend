@@ -4,6 +4,8 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 import java.time.LocalDate;
+
+import back.petionary.account.MyRole;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -22,9 +24,10 @@ class AccountTest {
         String detail = "상세주소";
         String phone = "01011111111";
         Address address = new Address(zipcode, detail);
+        MyRole role = MyRole.USER;
 
         //when
-        Account account = new Account(email, phone, name, birth, address);
+        Account account = new Account(email, phone, name, birth, address, role);
 
         //then
         assertThat(account.getEmail()).isEqualTo(email);
@@ -46,9 +49,10 @@ class AccountTest {
         String detail = "상세주소";
         String phone = "01011111111";
         Address address = new Address(zipcode, detail);
+        MyRole role = MyRole.USER;
 
         //when && then
-        assertThatThrownBy(() -> new Account(email, phone, name, birth, address))
+        assertThatThrownBy(() -> new Account(email, phone, name, birth, address, role))
             .isInstanceOf(IllegalArgumentException.class);
     }
 
@@ -63,9 +67,10 @@ class AccountTest {
         String detail = "상세주소";
         String phone = "01011111111";
         Address address = new Address(zipcode, detail);
+        MyRole role = MyRole.USER;
 
         //when && then
-        assertThatThrownBy(() -> new Account(email, phone, name, birth, address))
+        assertThatThrownBy(() -> new Account(email, phone, name, birth, address, role))
             .isInstanceOf(IllegalArgumentException.class);
     }
 
@@ -80,9 +85,10 @@ class AccountTest {
         String detail = "상세주소";
         String phone = "01011111111";
         Address address = new Address(zipcode, detail);
+        MyRole role = MyRole.USER;
 
         //when && then
-        assertThatThrownBy(() -> new Account(email, phone, name, birth, address))
+        assertThatThrownBy(() -> new Account(email, phone, name, birth, address, role))
             .isInstanceOf(IllegalArgumentException.class);
     }
 
@@ -97,9 +103,10 @@ class AccountTest {
         String detail = "상세주소";
         String phone = null;
         Address address = new Address(zipcode, detail);
+        MyRole role = MyRole.USER;
 
         //when && then
-        assertThatThrownBy(() -> new Account(email, phone, name, birth, address))
+        assertThatThrownBy(() -> new Account(email, phone, name, birth, address, role))
             .isInstanceOf(IllegalArgumentException.class);
 
     }
@@ -139,9 +146,10 @@ class AccountTest {
         String detail = "상세주소";
         String phone = "0".repeat(12);
         Address address = new Address(zipcode, detail);
+        MyRole role = MyRole.USER;
 
         //when && then
-        assertThatThrownBy(() -> new Account(email, phone, name, birth, address))
+        assertThatThrownBy(() -> new Account(email, phone, name, birth, address, role))
             .isInstanceOf(IllegalArgumentException.class);
     }
 
@@ -155,9 +163,10 @@ class AccountTest {
         String detail = "상세주소";
         String phone = "01012345678";
         Address address = new Address(zipcode, detail);
+        MyRole role = MyRole.USER;
 
         //when && then
-        assertThatThrownBy(() -> new Account(email, phone, name, birth, address))
+        assertThatThrownBy(() -> new Account(email, phone, name, birth, address, role))
             .isInstanceOf(IllegalArgumentException.class);
     }
 }
