@@ -8,4 +8,5 @@ import lombok.Getter;
 public class MypageAccountInfoRequest {
     private String phoneNumber;
     private String image;
+    asd
 }
