@@ -15,6 +15,7 @@ public class MypageController {
     @GetMapping("/{id}")
     public MypageAccountInfoResponse findAccountInfo(@PathVariable Long id){
         return mypageService.findAccountInfo(id);
+        ad
     }
 
     @PutMapping("/{id}")
