@@ -2,7 +2,8 @@ package back.petionary.application.mypage.controller;
 
 import back.petionary.application.mypage.dto.request.MypageAccountInfoRequest;
 import back.petionary.application.mypage.dto.response.MypageAccountInfoResponse;
-import back.petionary.application.mypage.service.MypageService;
+import back.petionary.application.mypage.service.MypageReadService;
+import back.petionary.application.mypage.service.MypageWriteService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
@@ -10,20 +11,21 @@ import org.springframework.web.bind.annotation.*;
 @RequiredArgsConstructor
 @RequestMapping("/mypage")
 public class MypageController {
-    private final MypageService mypageService;
+    private final MypageWriteService mypageWriteService;
+    private final MypageReadService mypageReadService;
 
     @GetMapping("/{id}")
     public MypageAccountInfoResponse findAccountInfo(@PathVariable Long id){
-        return mypageService.findAccountInfo(id);
+        return mypageReadService.findAccountInfo(id);
     }
 
     @PutMapping("/{id}")
     public String updateAccountInfo(@PathVariable Long id, @RequestBody MypageAccountInfoRequest mypageAccountInfoRequest) {
-        return mypageService.updateAccountInfo(id, mypageAccountInfoRequest);
+        return mypageWriteService.updateAccountInfo(id, mypageAccountInfoRequest);
     }
 
     @DeleteMapping("/{id}")
     public String accountWithdrawal(@PathVariable Long id) {
-        return mypageService.accountWithdrawal(id);
+        return mypageWriteService.accountWithdrawal(id);
     }
 }

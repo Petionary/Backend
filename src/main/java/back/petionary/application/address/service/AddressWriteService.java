@@ -16,19 +16,16 @@ import java.util.List;
 @Service
 @RequiredArgsConstructor
 @Transactional
-public class AddressService {
+public class AddressWriteService {
     private final AccountRepository accountRepository;
     private final AddressRepository addressRepository;
 
-    public String setAccountInfo(AddressRequest addressRequest) {
+    public String updateAccountInfo(AddressRequest addressRequest) {
         Account account = accountRepository.findById(addressRequest.getAccountId()).orElseThrow(() -> new PetionaryException("Account not found with id: " + addressRequest.getAccountId()));
         List<AddressDetails> addressDetails = addressRequest.getAddressDetails();
-        for (AddressDetails addressDetail : addressDetails) {
-            Address address =  new Address(account, addressDetail.getArea(), addressDetail.getCity(), addressDetail.getLocalAddress());
-            addressRepository.save(address);
-        }
+        addressDetails.stream()
+                .map(addressDetail -> new Address(account, addressDetail.getArea(), addressDetail.getCity(), addressDetail.getLocalAddress()));
         account.createNickName(addressRequest.getNickName());
-        accountRepository.save(account);
         return "성공";
     }
 }
