@@ -12,6 +12,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -24,7 +25,8 @@ public class AddressWriteService {
         Account account = accountRepository.findById(addressRequest.getAccountId()).orElseThrow(() -> new PetionaryException("Account not found with id: " + addressRequest.getAccountId()));
         List<AddressDetails> addressDetails = addressRequest.getAddressDetails();
         addressDetails.stream()
-                .map(addressDetail -> new Address(account, addressDetail.getArea(), addressDetail.getCity(), addressDetail.getLocalAddress()));
+                .map(addressDetail -> new Address(account, addressDetail.getArea(), addressDetail.getCity(), addressDetail.getLocalAddress()))
+                .forEach(addressRepository::save);
         account.createNickName(addressRequest.getNickName());
         return "성공";
     }
