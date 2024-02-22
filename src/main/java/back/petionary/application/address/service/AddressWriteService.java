@@ -22,7 +22,7 @@ public class AddressWriteService {
     private final AddressRepository addressRepository;
 
     public String updateAccountInfo(AddressRequest addressRequest) {
-        Account account = accountRepository.findById(addressRequest.getAccountId()).orElseThrow(() -> new PetionaryException("Account not found with id: " + addressRequest.getAccountId()));
+        Account account = accountRepository.findById(addressRequest.getAccountId()).orElseThrow(() -> new PetionaryException("id를 찾을 수 없습니다 : " + addressRequest.getAccountId()));
         List<AddressDetails> addressDetails = addressRequest.getAddressDetails();
         addressDetails.stream()
                 .map(addressDetail -> new Address(account, addressDetail.getArea(), addressDetail.getCity(), addressDetail.getLocalAddress()))

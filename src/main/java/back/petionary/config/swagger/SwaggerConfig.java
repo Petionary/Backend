@@ -19,14 +19,14 @@ public class SwaggerConfig {
         return new Docket(DocumentationType.SWAGGER_2)
             .apiInfo(apiInfo())
             .select()
-            .apis(RequestHandlerSelectors.basePackage("back.petionarty"))
+            .apis(RequestHandlerSelectors.basePackage("back.petionary"))
             .paths(PathSelectors.any())
             .build();
     }
 
     private ApiInfo apiInfo() {
         return new ApiInfoBuilder()
-            .title("Petionarty API")
+            .title("Petionary API")
             .version("1.0.0")
             .description("반려동물과 동반할 수 있는 호텔,음식점 등 정보를 알려주는 서비스입니다.")
             .build();
