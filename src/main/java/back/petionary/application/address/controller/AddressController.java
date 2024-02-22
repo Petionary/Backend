@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/account-info")
 public class AddressController {
     private final AddressWriteService addressWriteService;
-    @PostMapping()
+    @PostMapping
     @ApiOperation(value = "자주 가는 지역 및 닉네임 입력", notes = "자주 가는 지역과 닉네임을 저장합니다.")
     public String updateAccountInfo(@RequestBody AddressRequest addressRequest) {
         return addressWriteService.updateAccountInfo(addressRequest);

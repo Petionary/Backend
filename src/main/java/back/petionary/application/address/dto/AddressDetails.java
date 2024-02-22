@@ -5,16 +5,12 @@ import lombok.Getter;
 
 @Getter
 public class AddressDetails {
-
-    //지역 - 시도
-    @ApiModelProperty(example = "서울")
+    @ApiModelProperty(example = "서울", value = "지역-시,도")
     private String area;
 
-    //시군구
-    @ApiModelProperty(example = "강남구")
+    @ApiModelProperty(example = "강남구", value = "시군구")
     private String city;
 
-    //동읍면 - 리
-    @ApiModelProperty(example = "논현동")
+    @ApiModelProperty(example = "논현동", value = "동읍면-리")
     private String localAddress;
 }

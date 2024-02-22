@@ -7,10 +7,10 @@ import java.util.List;
 
 @Getter
 public class AddressRequest {
-    @ApiModelProperty(example = "회원id")
+    @ApiModelProperty(value = "1")
     private Long accountId;
 
-    @ApiModelProperty(example = "닉네임")
+    @ApiModelProperty(value = "닉네임")
     private String nickName;
 
     @ApiModelProperty(dataType = "List<AddressDetails>")
