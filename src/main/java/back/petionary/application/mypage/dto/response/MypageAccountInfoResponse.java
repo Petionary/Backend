@@ -7,15 +7,15 @@ import lombok.Getter;
 @Getter
 @AllArgsConstructor
 public class MypageAccountInfoResponse {
-    @ApiModelProperty(example = "회원id")
+    @ApiModelProperty(value = "회원id", example = "1")
     private Long accountId;
 
-    @ApiModelProperty(example = "닉네임")
+    @ApiModelProperty(value = "닉네임", example = "밍밍")
     private String nickName;
 
-    @ApiModelProperty(example = "010-1234-5678")
+    @ApiModelProperty(value = "핸드폰 번호", example = "010-1234-5678")
     private String phoneNumber;
 
-    @ApiModelProperty(example = "이미지 url")
+    @ApiModelProperty(value = "이미지 url")
     private String image;
 }
