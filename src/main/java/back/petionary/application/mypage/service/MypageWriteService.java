@@ -12,13 +12,8 @@ import org.springframework.transaction.annotation.Transactional;
 @Service
 @RequiredArgsConstructor
 @Transactional
-public class MypageService {
+public class MypageWriteService {
     private final AccountRepository accountRepository;
-
-    public MypageAccountInfoResponse findAccountInfo(Long accountId) {
-        Account account = accountRepository.findById(accountId).orElseThrow(() -> new PetionaryException("Account not found with id: " + accountId));
-        return new MypageAccountInfoResponse(account.getId(), account.getNickName(), account.getPhone(), account.getImage());
-    }
 
     public String updateAccountInfo(Long accountId, MypageAccountInfoRequest mypageAccountInfoRequest) {
         Account account = accountRepository.findById(accountId).orElseThrow(() -> new PetionaryException("Account not found with id: " + accountId));
