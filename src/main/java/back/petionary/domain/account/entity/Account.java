@@ -34,15 +34,17 @@ public class Account extends BaseEntity {
 
     private LocalDate birth;
 
+    private String nickName;
+
+    private String image;
     @Enumerated(EnumType.STRING)
     private SocialType socialType;
 
     @Enumerated(EnumType.STRING)
     private Role role;
 
-    private String nickName;
 
-    public Account(String email, String phone, String name, LocalDate birth, String nickName) {
+    public Account(String email, String phone, String name, LocalDate birth) {
         Validation.validateNull(email, phone, name, birth);
         Validation.validateSize(phone, PHONE_SIZE);
         Validation.validateSize(name, NAME_SIZE);
@@ -50,6 +52,15 @@ public class Account extends BaseEntity {
         this.phone = phone;
         this.name = name;
         this.birth = birth;
+    }
+
+    public void createNickName(String nickName) {
+        this.nickName = nickName;
+    }
+
+    public void updateAccountInfo(String phone, String image){
+        this.phone = phone;
+        this.image = image;
         this.nickName = nickName;
     }
 
@@ -58,9 +69,5 @@ public class Account extends BaseEntity {
         this.name = name;
         this.socialType = socialType;
         this.role = Role.USER;
-    }
-
-    public void createNickName(String nickName) {
-        this.nickName = nickName;
     }
 }

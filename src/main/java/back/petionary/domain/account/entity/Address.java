@@ -1,32 +1,27 @@
 package back.petionary.domain.account.entity;
-import javax.persistence.*;
 
 import back.petionary.common.BaseEntity;
+import javax.persistence.*;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
-import lombok.Setter;
+import org.springframework.data.annotation.Id;
 
 @NoArgsConstructor
+@Getter
 @Entity
-@Setter
 public class Address extends BaseEntity {
-
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Id
-    private Long id;
 
     @ManyToOne(fetch = FetchType.LAZY)
     private Account account;
 
-    private String area; // 지역 : 서울특별시
+    private String area;
+    private String city;
+    private String localAddress;
 
-    private String address; //주소 : 송파구
-
-
-
-    public Address(Account account, String area, String address) {
+    public Address(Account account, String area, String city, String localAddress) {
         this.account = account;
         this.area = area;
-        this.address = address;
+        this.city = city;
+        this.localAddress = localAddress;
     }
-
 }

@@ -1,18 +1,18 @@
 package back.petionary.application.address.dto;
 
+import io.swagger.annotations.ApiModelProperty;
 import lombok.Getter;
-import lombok.Setter;
 
 import java.util.List;
 
 @Getter
 public class AddressRequest {
+    @ApiModelProperty(value = "회원id", example = "1")
+    private Long accountId;
 
-    private Long accountId; //회원 이메일
+    @ApiModelProperty(value = "닉네임", example = "밍밍")
+    private String nickName;
 
-    private String nickName; //닉네임
-
+    @ApiModelProperty(dataType = "List<AddressDetails>")
     private List<AddressDetails> addressDetails;
-
-
 }
