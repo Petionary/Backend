@@ -33,3 +33,7 @@ spring:
           scope:
             - profile_nickname
             - account_email
+jwt :
+  access-token-expire : 300
+  refresh-token-expire : 3600
+  key : ${JWT_KEY}

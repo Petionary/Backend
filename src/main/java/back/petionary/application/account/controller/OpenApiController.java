@@ -27,12 +27,7 @@ public class OpenApiController {
     private final SocialLoginService socialLoginService;
 
     @GetMapping("/login/oauth2/kakao-login")
-    public void kakaoLogin(@RequestParam String code, HttpServletResponse res) {
-        socialLoginService.getKakaoAccessToken(code, res);
-    }
-
-    @GetMapping("/kakao-logout")
-    public String kakaoLogout(HttpSession session){
-        return socialLoginService.logout(session);
+    public void kakaoLogin(@RequestParam String code) {
+        socialLoginService.getKakaoAccessToken(code);
     }
 }

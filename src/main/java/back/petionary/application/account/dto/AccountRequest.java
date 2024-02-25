@@ -1,6 +1,7 @@
 package back.petionary.application.account.dto;
 
 import back.petionary.domain.account.entity.Account;
+import back.petionary.domain.account.enums.SocialType;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -16,7 +17,7 @@ public class AccountRequest {
         this.userName = userName;
     }
 
-    public Account createKakaoAccount() {
-        return new Account(this.email, this.userName);
+    public Account createKakaoAccount(SocialType socialType) {
+        return new Account(this.email, this.userName, socialType);
     }
 }

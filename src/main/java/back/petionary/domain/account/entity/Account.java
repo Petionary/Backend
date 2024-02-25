@@ -2,11 +2,14 @@ package back.petionary.domain.account.entity;
 
 import back.petionary.common.BaseEntity;
 import back.petionary.common.util.validation.Validation;
+import back.petionary.domain.account.enums.Role;
+import back.petionary.domain.account.enums.SocialType;
 import java.time.LocalDate;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 
-import lombok.Builder;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -31,7 +34,11 @@ public class Account extends BaseEntity {
 
     private LocalDate birth;
 
-    private String role;
+    @Enumerated(EnumType.STRING)
+    private SocialType socialType;
+
+    @Enumerated(EnumType.STRING)
+    private Role role;
 
     private String nickName;
 
@@ -44,13 +51,13 @@ public class Account extends BaseEntity {
         this.name = name;
         this.birth = birth;
         this.nickName = nickName;
-        this.role = "ROLE_KAKAO";
     }
 
-    public Account(String email, String name) {
+    public Account(String email, String name, SocialType socialType) {
         this.email = email;
         this.name = name;
-        this.role = "ROLE_KAKAO";
+        this.socialType = socialType;
+        this.role = Role.USER;
     }
 
     public void createNickName(String nickName) {
