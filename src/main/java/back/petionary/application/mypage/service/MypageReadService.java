@@ -15,7 +15,7 @@ public class MypageReadService {
     private final AccountRepository accountRepository;
 
     public MypageAccountInfoResponse findAccountInfo(Long accountId) {
-        Account account = accountRepository.findById(accountId).orElseThrow(() -> new PetionaryException("Account not found with id: " + accountId));
+        Account account = accountRepository.findById(accountId).orElseThrow(() -> new PetionaryException("회원을 찾을 수 없습니다: "));
         return new MypageAccountInfoResponse(account.getId(), account.getNickName(), account.getPhone(), account.getImage());
     }
 }

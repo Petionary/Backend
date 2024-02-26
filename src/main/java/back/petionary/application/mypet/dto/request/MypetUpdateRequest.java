@@ -6,13 +6,11 @@ import io.swagger.annotations.ApiModelProperty;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
 import java.time.LocalDate;
 
 @Getter
 @AllArgsConstructor
-public class MypetCreateRequest {
+public class MypetUpdateRequest {
     @ApiModelProperty(value = "이미지 url", example = "")
     private String imgUrl;
 

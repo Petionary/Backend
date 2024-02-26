@@ -1,5 +1,6 @@
 package back.petionary.application.mypet.enums;
 
+import io.swagger.annotations.ApiModelProperty;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 @AllArgsConstructor
