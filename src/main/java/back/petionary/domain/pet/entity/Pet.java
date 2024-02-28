@@ -44,8 +44,7 @@ public class Pet extends BaseEntity {
         this.content = content;
     }
 
-    public void update(Account account, String imgUrl, String petName, LocalDate petBirth, PetGender petGender, PetSpecies petSpecies, String speciesDetail, String content) {
-        this.account = account;
+    public void update(String imgUrl, String petName, LocalDate petBirth, PetGender petGender, PetSpecies petSpecies, String speciesDetail, String content) {
         this.imgUrl = imgUrl;
         this.petName = petName;
         this.petBirth = petBirth;

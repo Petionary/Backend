@@ -21,7 +21,7 @@ public class MypetReadService {
     private final PetRepository petRepository;
 
     public List<MypetListResponse> getMypets(Long accountId) {
-        Account account = accountRepository.findById(accountId).orElseThrow(() -> new PetionaryException("회원을 찾을 수 없습니다: "));
+        Account account = accountRepository.findById(accountId).orElseThrow(() -> new PetionaryException("회원을 찾을 수 없습니다"));
         List<Pet> petList = petRepository.findByAccountId(account.getId());
         return petList.stream()
                 .map(pet -> new MypetListResponse(pet.getImgUrl(), pet.getPetName(), pet.getPetSpecies(), pet.getCreatedAt(), pet.getUpdatedAt()))

@@ -13,7 +13,7 @@ import java.time.LocalDate;
 @Getter
 @AllArgsConstructor
 public class MypetCreateRequest {
-    @ApiModelProperty(value = "이미지 url", example = "")
+    @ApiModelProperty(value = "이미지 url")
     private String imgUrl;
 
     @ApiModelProperty(value = "펫 이름", example = "둥이")

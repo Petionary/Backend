@@ -19,7 +19,7 @@ public class MypetWriteService {
     private final PetRepository petRepository;
 
     public String create(Long accountId, MypetCreateRequest mypetCreateRequest) {
-        Account account = accountRepository.findById(accountId).orElseThrow(() -> new PetionaryException("회원을 찾을 수 없습니다: "));
+        Account account = accountRepository.findById(accountId).orElseThrow(() -> new PetionaryException("회원을 찾을 수 없습니다"));
         Pet pet = new Pet(account, mypetCreateRequest.getImgUrl(), mypetCreateRequest.getPetName(),
                 mypetCreateRequest.getPetBirth(), mypetCreateRequest.getPetGender(), mypetCreateRequest.getPetSpecies(),
                 mypetCreateRequest.getSpeciesDetail(), mypetCreateRequest.getContent());
@@ -28,9 +28,8 @@ public class MypetWriteService {
     }
 
     public void update(Long accountId, Long petId, MypetUpdateRequest mypetUpdateRequest) {
-        Pet pet = petRepository.findById(petId).orElseThrow(() -> new PetionaryException("펫이 존재하지 않습니다."));
-        Account account = accountRepository.findById(accountId).orElseThrow(() ->  new PetionaryException("회원이 존재하지 않습니다.."));
-        pet.update(account, mypetUpdateRequest.getImgUrl(), mypetUpdateRequest.getPetName(), mypetUpdateRequest.getPetBirth(),
+        Pet pet = petRepository.findByIdAndAccountId(petId, accountId).orElseThrow(() -> new PetionaryException("회원id에 해당하는 펫을 찾을 수 없습니다"));
+        pet.update(mypetUpdateRequest.getImgUrl(), mypetUpdateRequest.getPetName(), mypetUpdateRequest.getPetBirth(),
                 mypetUpdateRequest.getPetGender(), mypetUpdateRequest.getPetSpecies(), mypetUpdateRequest.getSpeciesDetail(), mypetUpdateRequest.getContent());
     }
 
