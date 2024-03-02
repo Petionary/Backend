@@ -3,8 +3,8 @@ package back.petionary.application.account.service;
 import back.petionary.domain.account.entity.Account;
 import back.petionary.domain.account.enums.SocialType;
 import back.petionary.domain.account.repository.AccountRepository;
-import back.petionary.security.auth.PrincipalDetails;
-import back.petionary.security.oauth.provider.TokenProvider;
+import back.petionary.security.oauth.provider.LoginToken;
+import back.petionary.security.oauth.provider.*;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
@@ -63,7 +63,7 @@ public class SocialLoginService {
     }
 
     @Transactional
-    public void getKakaoAccessToken(String code) {
+    public LoginToken getKakaoAccessToken(String code) {
         RestTemplate rt = new RestTemplate();
         HttpHeaders httpHeaders = new HttpHeaders();
         httpHeaders.add("Content-type", "application/x-www-form-urlencoded;charset=utf-8");
@@ -95,11 +95,11 @@ public class SocialLoginService {
             if (!accountRepository.existsByEmail(kakaoUser.getEmail())) {
                 accountRepository.save(kakaoUser);
             }
-            String access_token = tokenProvider.create(new PrincipalDetails(kakaoUser));
-
+            return tokenProvider.getToken(kakaoUser.getId(),kakaoUser.getRole());
         } catch (Exception e) {
             e.printStackTrace();
         }
+        return null;
     }
 
     private static String get(String apiUrl, Map<String, String> requestHeaders) {
