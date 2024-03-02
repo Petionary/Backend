@@ -6,23 +6,15 @@ import java.time.LocalDateTime;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.OneToOne;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
-/**
- * packageName    : back.petionary.domain.token
- * fileName       : Token
- * author         : hoewoonjeong
- * date           : 2/22/24
- * description    :
- * ===========================================================
- * DATE              AUTHOR             NOTE
- * -----------------------------------------------------------
- * 2/22/24        hoewoonjeong               최초 생성
- */
+
 @Entity
 @NoArgsConstructor
 @Getter
+@AllArgsConstructor
 public class Token extends BaseEntity {
     private String refresh;
     private String access;
