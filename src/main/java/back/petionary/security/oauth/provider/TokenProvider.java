@@ -26,9 +26,6 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Component;
 
-/**
- * 커스텀 어노테이션, 필터등록
- * */
 @Component
 public class TokenProvider {
 

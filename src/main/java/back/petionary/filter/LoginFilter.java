@@ -12,17 +12,6 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.filter.OncePerRequestFilter;
 
-/**
- * packageName    : back.petionary.filter
- * fileName       : LoginFilter
- * author         : hoewoonjeong
- * date           : 3/2/24
- * description    :
- * ===========================================================
- * DATE              AUTHOR             NOTE
- * -----------------------------------------------------------
- * 3/2/24        hoewoonjeong               최초 생성
- */
 @RequiredArgsConstructor
 public class LoginFilter extends OncePerRequestFilter {
 

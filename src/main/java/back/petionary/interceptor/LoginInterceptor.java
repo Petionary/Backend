@@ -14,17 +14,6 @@ import org.springframework.web.context.request.NativeWebRequest;
 import org.springframework.web.method.support.HandlerMethodArgumentResolver;
 import org.springframework.web.method.support.ModelAndViewContainer;
 
-/**
- * packageName    : back.petionary.interceptor
- * fileName       : LoginInterceptor
- * author         : hoewoonjeong
- * date           : 3/2/24
- * description    :
- * ===========================================================
- * DATE              AUTHOR             NOTE
- * -----------------------------------------------------------
- * 3/2/24        hoewoonjeong               최초 생성
- */
 @RequiredArgsConstructor
 public class LoginInterceptor implements HandlerMethodArgumentResolver {
     private final AccountRepository accountRepository;

@@ -16,6 +16,5 @@ class PetionaryExceptionResponseTest {
         assertThatThrownBy(() -> {throw new PetionaryException(errorCode);})
             .isInstanceOf(PetionaryException.class)
             .message().isEqualTo("찾을 수 없습니다.");
-        a
     }
 }
