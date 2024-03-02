@@ -1,5 +1,6 @@
 package back.petionary.security.oauth.provider;
 
+import back.petionary.exception.PetionaryException;
 import back.petionary.domain.account.entity.Account;
 import back.petionary.domain.account.enums.Role;
 import back.petionary.domain.account.repository.AccountRepository;
@@ -21,23 +22,25 @@ import java.util.Date;
 import javax.servlet.http.HttpServletRequest;
 import lombok.val;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.data.crossstore.ChangeSetPersister.NotFoundException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Component;
 
+/**
+ * 커스텀 어노테이션, 필터등록
+ * */
 @Component
-class TokenProvider {
+public class TokenProvider {
 
-    private AccountRepository accountRepository;
-    private TokenRepository tokenRepository;
+    private final AccountRepository accountRepository;
+    private final TokenRepository tokenRepository;
     @Value("${jwt.secret-key}")
     private String secretKey;
     @Value("${jwt.access-token-expire-time}")
     private String ACCESS_TOKEN_EXPIRE_TIME;
     @Value("{jwt.refresh-token-expire-time}")
     private String REFRESH_TOKEN_EXPIRE_TIME;
-    private Key key;
+    private final Key key;
 
     public TokenProvider(AccountRepository accountRepository, TokenRepository tokenRepository) {
         this.accountRepository = accountRepository;
@@ -49,52 +52,38 @@ class TokenProvider {
     /**
      * accessToken, refreshToken 생성
      */
-    public void getToken(Long accountId, Role role, Date dateNow) {
+    public LoginToken getToken(Long accountId, Role role) {
         LocalDateTime now = LocalDateTime.now();
-        long nowTokenExpire = now.toInstant(ZoneOffset.UTC).toEpochMilli();
-        LocalDateTime accessTokenTime = now.plus(Long.parseLong(ACCESS_TOKEN_EXPIRE_TIME),
-            ChronoUnit.SECONDS);
-        LocalDateTime refreshTokenTime = now.plus(Long.parseLong(REFRESH_TOKEN_EXPIRE_TIME),
-            ChronoUnit.SECONDS);
 
-        long accessTokenExpire = accessTokenTime.toInstant(ZoneOffset.UTC).toEpochMilli();
-        long refreshTokenExpire = refreshTokenTime.toInstant(ZoneOffset.UTC).toEpochMilli();
+        LocalDateTime accessTokenTime =
+            now.plus(Long.parseLong(ACCESS_TOKEN_EXPIRE_TIME), ChronoUnit.SECONDS);
+        LocalDateTime refreshTokenTime =
+            now.plus(Long.parseLong(REFRESH_TOKEN_EXPIRE_TIME), ChronoUnit.SECONDS);
         String accessToken = createToken(
-            accountId, accessTokenExpire, role
+            accountId, accessTokenTime.toInstant(ZoneOffset.UTC).toEpochMilli(), role
         );
-        Role loginUserRole = role;
+        LoginToken loginToken = null;
         Token token = tokenRepository.findByAccountId(accountId).orElse(null);
         if (token != null) {
-            if (nowTokenExpire > token.getRefreshExpiredAt().getLong()) {
-
+            if (now.isAfter(token.getRefreshExpiredAt())) {
+                throw new PetionaryException("리프레쉬 토큰 만료됨");
             }
+            loginToken = new LoginToken(accessToken, accessTokenTime);
         }
-            ?.let {
-            if (nowTokenExpire > it.expireAt) {
-                throw KepaException(ExceptionCode.REFRESH_TOKEN_EXPIRE)
-            }
-            val account = accountRepository.findByIdOrNull(it.id)
-                ?:throw KepaException(ExceptionCode.NOT_EXSISTS_INFO)
-            LoginToken(accessToken = accessToken, refreshToken = it.token,
-                accessTokenExpiredAt = Date(accessTokenExpire),
-                refreshTokenExpiredAt = Date(it.expireAt), id = account.id)
+        if (token == null) {
+            String refreshToken = createToken(
+                accountId, refreshTokenTime.toInstant(ZoneOffset.UTC).toEpochMilli(), role
+            );
+            Account account = accountRepository.findById(accountId)
+                .orElseThrow(() -> new PetionaryException("회원이 존재하지 않습니다."));
+            tokenRepository.save(
+                new Token(refreshToken, accessToken, refreshTokenTime, accessTokenTime, account));
+            loginToken = new LoginToken(
+                accessToken,
+                accessTokenTime
+            );
         }
-        if (loginToken == null) {
-            val refreshToken = createToken(
-                id = id,
-                tokenExpireTime = refreshTokenExpire,
-                role = role
-            )
-            val account = accountRepository.findByIdOrNull(id)
-                ?:throw KepaException(ExceptionCode.NOT_EXSISTS_INFO)
-            val savedRefreshToken = refreshTokenRepository.save(
-                RefreshToken(account = account, token = refreshToken, expireAt = refreshTokenExpire,
-                    role = loginUserRole))
-            loginToken = LoginToken(accessToken = accessToken, refreshToken = refreshToken,
-                accessTokenExpiredAt = Date(accessTokenExpire),
-                refreshTokenExpiredAt = Date(refreshTokenExpire), id = savedRefreshToken.id)
-        }
-        //return loginToken
+        return loginToken;
     }
 
     public Authentication getAuthentication(String token) {
@@ -102,7 +91,7 @@ class TokenProvider {
         if (account == null) {
             throw new RuntimeException();
         }
-        val loginUserDetail = new PrincipalDetails(account);
+        PrincipalDetails loginUserDetail = new PrincipalDetails(account);
         return new UsernamePasswordAuthenticationToken(loginUserDetail, "",
             loginUserDetail.getAuthorities());
     }

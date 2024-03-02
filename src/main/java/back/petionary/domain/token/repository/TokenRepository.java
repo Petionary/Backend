@@ -8,4 +8,6 @@ import org.springframework.data.jpa.repository.JpaRepository;
 public interface TokenRepository extends JpaRepository<Token,Long> {
 
     Optional<Token> findByAccountId(Long accountId);
+
+    Boolean existsByAccess(String access);
 }
