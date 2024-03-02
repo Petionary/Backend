@@ -123,7 +123,6 @@ public class SocialLoginService {
         }
     }
 
-
     private static HttpURLConnection connect(String apiUrl) {
         try {
             URL url = new URL(apiUrl);
@@ -134,8 +133,6 @@ public class SocialLoginService {
             throw new RuntimeException("연결이 실패했습니다. : " + apiUrl, e);
         }
     }
-
-
 
     private static String readBody(InputStream body) {
         InputStreamReader streamReader = new InputStreamReader(body);
@@ -152,4 +149,3 @@ public class SocialLoginService {
         }
     }
 }
-
