@@ -36,17 +36,15 @@ public class TokenProvider {
     private final TokenRepository tokenRepository;
     @Value("${jwt.secret-key}")
     private String secretKey;
-    @Value("${jwt.access-token-expire-time}")
+    @Value("${jwt.access-token-expire}")
     private String ACCESS_TOKEN_EXPIRE_TIME;
-    @Value("{jwt.refresh-token-expire-time}")
+    @Value("{jwt.refresh-token-expire}")
     private String REFRESH_TOKEN_EXPIRE_TIME;
-    private final Key key;
+    private  Key key;
 
     public TokenProvider(AccountRepository accountRepository, TokenRepository tokenRepository) {
         this.accountRepository = accountRepository;
         this.tokenRepository = tokenRepository;
-        byte[] keyBytes = Decoders.BASE64.decode(secretKey);
-        this.key = Keys.hmacShaKeyFor(keyBytes);
     }
 
     /**
@@ -105,6 +103,8 @@ public class TokenProvider {
 
     public Boolean validateToken(String token) {
         try {
+            byte[] keyBytes = Decoders.BASE64.decode(secretKey);
+            key = Keys.hmacShaKeyFor(keyBytes);
             Jwts.parserBuilder().setSigningKey(key).build().parseClaimsJws(token).getBody();
             return true;
         } catch (SecurityException | UnsupportedJwtException | IllegalArgumentException e) {
