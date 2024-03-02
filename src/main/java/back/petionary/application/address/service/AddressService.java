@@ -6,12 +6,10 @@ import back.petionary.domain.account.entity.Account;
 import back.petionary.domain.account.entity.Address;
 import back.petionary.domain.account.repository.AccountRepository;
 import back.petionary.domain.account.repository.AddressRepository;
+import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
-import java.util.ArrayList;
-import java.util.List;
 
 @Service
 @RequiredArgsConstructor
@@ -26,14 +24,12 @@ public class AddressService {
         List<AddressDetails> addressDetails = addressRequest.getAddressDetails();
 
         for (AddressDetails addressDetail : addressDetails) {
-            Address address = new Address(account, addressDetail.getArea(), addressDetail.getAddress());
+            Address address = new Address(account, addressDetail.getArea(), addressDetail.getCity(), addressDetail.getLocalAddress());
             addressRepository.save(address);
         }
         account.createNickName(addressRequest.getNickName());
         accountRepository.save(account);
-
         return "성공";
-
     }
 
 
