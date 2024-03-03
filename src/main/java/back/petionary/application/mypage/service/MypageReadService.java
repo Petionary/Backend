@@ -1,6 +1,6 @@
 package back.petionary.application.mypage.service;
 
-import back.petionary.Exception.PetionaryException;
+import back.petionary.exception.PetionaryException;
 import back.petionary.application.mypage.dto.response.MypageAccountInfoResponse;
 import back.petionary.domain.account.entity.Account;
 import back.petionary.domain.account.repository.AccountRepository;

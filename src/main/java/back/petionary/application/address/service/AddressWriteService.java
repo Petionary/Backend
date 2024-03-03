@@ -1,6 +1,6 @@
 package back.petionary.application.address.service;
 
-import back.petionary.Exception.PetionaryException;
+import back.petionary.exception.PetionaryException;
 import back.petionary.application.address.dto.AddressDetails;
 import back.petionary.application.address.dto.AddressRequest;
 import back.petionary.domain.account.entity.Account;
@@ -12,7 +12,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
