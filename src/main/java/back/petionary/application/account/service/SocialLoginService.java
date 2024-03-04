@@ -3,6 +3,7 @@ package back.petionary.application.account.service;
 import back.petionary.domain.account.entity.Account;
 import back.petionary.domain.account.enums.SocialType;
 import back.petionary.domain.account.repository.AccountRepository;
+import back.petionary.exception.PetionaryException;
 import back.petionary.security.oauth.provider.LoginToken;
 import back.petionary.security.oauth.provider.*;
 import java.io.BufferedReader;
@@ -89,13 +90,14 @@ public class SocialLoginService {
 
             String email = (String) kakao_account.get("email");
             String userName = (String) properties.get("nickname");
-
-            Account kakaoUser = new Account(email, userName, SocialType.KAKAO);
-
-            if (!accountRepository.existsByEmail(kakaoUser.getEmail())) {
-                accountRepository.save(kakaoUser);
+            Account account = null;
+            if (!accountRepository.existsByEmail(email)) {
+                Account kakaoUser = new Account(email, userName, SocialType.KAKAO);
+                account = accountRepository.save(kakaoUser);
+            }else {
+                account = accountRepository.findByEmail(email).orElseThrow(() -> new PetionaryException("회원을 찾을 수 없습니다."));
             }
-            return tokenProvider.getToken(kakaoUser.getId(),kakaoUser.getRole());
+            return tokenProvider.getToken(account.getId(),account.getRole());
         } catch (Exception e) {
             e.printStackTrace();
         }

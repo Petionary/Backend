@@ -32,6 +32,7 @@ public class LoginFilter extends OncePerRequestFilter {
             }
             Authentication authentication = tokenProvider.getAuthentication(loginTokens[1]);
             SecurityContextHolder.getContext().setAuthentication(authentication);
+            filterChain.doFilter(request,response);
         }
     }
 }

@@ -19,6 +19,7 @@ import java.time.LocalDateTime;
 import java.time.ZoneOffset;
 import java.time.temporal.ChronoUnit;
 import java.util.Date;
+import javax.annotation.PostConstruct;
 import javax.servlet.http.HttpServletRequest;
 import lombok.val;
 import org.springframework.beans.factory.annotation.Value;
@@ -35,9 +36,15 @@ public class TokenProvider {
     private String secretKey;
     @Value("${jwt.access-token-expire}")
     private String ACCESS_TOKEN_EXPIRE_TIME;
-    @Value("{jwt.refresh-token-expire}")
+    @Value("${jwt.refresh-token-expire}")
     private String REFRESH_TOKEN_EXPIRE_TIME;
     private  Key key;
+
+    @PostConstruct
+    public void setKet() {
+        byte[] keyBytes = Decoders.BASE64.decode(secretKey);
+        key = Keys.hmacShaKeyFor(keyBytes);
+    }
 
     public TokenProvider(AccountRepository accountRepository, TokenRepository tokenRepository) {
         this.accountRepository = accountRepository;
@@ -100,8 +107,6 @@ public class TokenProvider {
 
     public Boolean validateToken(String token) {
         try {
-            byte[] keyBytes = Decoders.BASE64.decode(secretKey);
-            key = Keys.hmacShaKeyFor(keyBytes);
             Jwts.parserBuilder().setSigningKey(key).build().parseClaimsJws(token).getBody();
             return true;
         } catch (SecurityException | UnsupportedJwtException | IllegalArgumentException e) {
