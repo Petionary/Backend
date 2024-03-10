@@ -1,4 +1,4 @@
-package back.petionary.Exception;
+package back.petionary.exception;
 
 public class PetionaryException extends RuntimeException{
 
