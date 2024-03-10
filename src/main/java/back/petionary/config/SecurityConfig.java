@@ -1,4 +1,4 @@
-package back.petionary.config.swagger;
+package back.petionary.config;
 
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
