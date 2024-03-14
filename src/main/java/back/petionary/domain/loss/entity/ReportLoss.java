@@ -21,7 +21,7 @@ public class ReportLoss extends BaseEntity {
     @ManyToOne(fetch = FetchType.LAZY)
     private Pet pet;
 
-    private String special;
+    private String feature;
 
     @Column(nullable = false)
     private String lossLocation;
@@ -31,13 +31,13 @@ public class ReportLoss extends BaseEntity {
 
     private String content;
 
-    @OneToMany(mappedBy = "reportLoss", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "reportLoss", cascade = CascadeType.ALL)
     private List<ReportLossImages> lossImages = new ArrayList<>();
 
-    public ReportLoss(Account account, Pet pet, String special, String lossLocation, LocalDateTime lossDateTime, String content) {
+    public ReportLoss(Account account, Pet pet, String feature, String lossLocation, LocalDateTime lossDateTime, String content) {
         this.account = account;
         this.pet = pet;
-        this.special = special;
+        this.feature = feature;
         this.lossLocation = lossLocation;
         this.lossDateTime = lossDateTime;
         this.content = content;
