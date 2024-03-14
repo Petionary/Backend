@@ -2,16 +2,25 @@ package back.petionary.domain.account.entity;
 
 import back.petionary.common.BaseEntity;
 import back.petionary.common.util.validation.Validation;
+import back.petionary.domain.account.enums.Role;
+import back.petionary.domain.account.enums.SocialType;
 import java.time.LocalDate;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 
 @Getter
+@Setter
 @NoArgsConstructor
 @Entity
+@AllArgsConstructor
 public class Account extends BaseEntity {
 
     private final static int PHONE_SIZE = 11;
@@ -30,6 +39,11 @@ public class Account extends BaseEntity {
     private String nickName;
 
     private String image;
+    @Enumerated(EnumType.STRING)
+    private SocialType socialType;
+
+    @Enumerated(EnumType.STRING)
+    private Role role;
 
 
     public Account(String email, String phone, String name, LocalDate birth) {
@@ -49,5 +63,13 @@ public class Account extends BaseEntity {
     public void updateAccountInfo(String phone, String image){
         this.phone = phone;
         this.image = image;
+        this.nickName = nickName;
+    }
+
+    public Account(String email, String name, SocialType socialType) {
+        this.email = email;
+        this.name = name;
+        this.socialType = socialType;
+        this.role = Role.USER;
     }
 }
