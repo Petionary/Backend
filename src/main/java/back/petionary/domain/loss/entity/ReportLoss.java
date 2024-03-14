@@ -23,8 +23,10 @@ public class ReportLoss extends BaseEntity {
 
     private String special;
 
+    @Column(nullable = false)
     private String lossLocation;
 
+    @Column(nullable = false)
     private LocalDateTime lossDateTime;
 
     private String content;

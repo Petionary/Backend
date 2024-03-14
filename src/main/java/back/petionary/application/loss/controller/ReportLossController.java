@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.*;
 @Api(tags = {"분실 신고 등록 API"}, description = "ReportLossController")
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/reportLoss")
+@RequestMapping("/report-loss")
 public class ReportLossController {
     private final ReportLossWriteService reportLossWriteService;
 

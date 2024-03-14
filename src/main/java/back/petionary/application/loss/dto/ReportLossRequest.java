@@ -14,7 +14,7 @@ public class ReportLossRequest {
     private String imgUrl;
 
     @ApiModelProperty(value = "펫 특징", example = "양털 후리스 옷을 입고 있어요.")
-    private String special;
+    private String feature;
 
     @ApiModelProperty(value = "실종 위치", example = "부천시 원미구 00아파트 근처")
     private String lossLocation;
