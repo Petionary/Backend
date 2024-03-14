@@ -29,8 +29,8 @@ public class ReportLoss extends BaseEntity {
 
     private String content;
 
-    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    private List<ReportLossImages> images = new ArrayList<>();
+    @OneToMany(mappedBy = "reportLoss", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    private List<ReportLossImages> lossImages = new ArrayList<>();
 
     public ReportLoss(Account account, Pet pet, String special, String lossLocation, LocalDateTime lossDateTime, String content) {
         this.account = account;
