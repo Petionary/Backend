@@ -1,9 +1,10 @@
 package back.petionary.security.oauth.provider;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
-import java.time.LocalDateTime;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
+
+import java.time.LocalDateTime;
 
 @AllArgsConstructor
 @Getter
