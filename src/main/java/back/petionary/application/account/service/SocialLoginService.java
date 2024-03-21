@@ -33,6 +33,7 @@ import java.util.Map;
 
 @Service
 @RequiredArgsConstructor
+@Transactional
 public class SocialLoginService {
 
     private final TokenProvider tokenProvider;
@@ -65,9 +66,6 @@ public class SocialLoginService {
     @Value("${spring.security.oauth2.client.registration.naver.redirect-uri}")
     private String NAVER_REDIRECT_URI;
 
-    @Value("${spring.security.oauth2.client.registration.naver.client-secret}")
-    private String NAVER_SECRET_ID;
-
     @Value("${spring.security.oauth2.client.provider.naver.token-uri}")
     private String NAVER_TOKEN_URI;
 
@@ -86,7 +84,6 @@ public class SocialLoginService {
         return params;
     }
 
-    @Transactional
     public LoginToken getKakaoAccessToken(String code) {
         RestTemplate rt = new RestTemplate();
         HttpHeaders httpHeaders = new HttpHeaders();
@@ -127,7 +124,6 @@ public class SocialLoginService {
         return null;
     }
 
-    @Transactional
     public LoginToken getNaverAccessToken(String code) {
         RestTemplate rt = new RestTemplate();
         HttpHeaders httpHeaders = new HttpHeaders();
