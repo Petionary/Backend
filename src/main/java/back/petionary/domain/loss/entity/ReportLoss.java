@@ -42,4 +42,10 @@ public class ReportLoss extends BaseEntity {
         this.lossDateTime = lossDateTime;
         this.content = content;
     }
+
+    public void create(String feature, Account account, String lossLocation){
+        this.feature = feature;
+        this.account = account;
+        this.lossLocation = lossLocation;
+    }
 }
