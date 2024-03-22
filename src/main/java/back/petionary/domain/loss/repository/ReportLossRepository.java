@@ -12,7 +12,7 @@ import java.util.Optional;
 @Repository
 public interface ReportLossRepository extends JpaRepository<ReportLoss, Long> {
 
-    @Query("select r from ReportLoss r join fetch r.account join fetch r.pet")
+    @Query("select r from ReportLoss r join fetch r.account join fetch r.pet where r.id = :reportLossId")
     Optional<ReportLoss> findById(Long reportLossId);
 
     @Query(value = "select r from ReportLoss r join fetch r.account",
