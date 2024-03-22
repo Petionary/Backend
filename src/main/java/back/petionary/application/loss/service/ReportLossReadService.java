@@ -2,6 +2,8 @@ package back.petionary.application.loss.service;
 
 import back.petionary.application.loss.dto.response.ReportLossListResponse;
 import back.petionary.application.loss.dto.response.ReportLossResponse;
+import back.petionary.domain.account.entity.Account;
+import back.petionary.domain.account.repository.AccountRepository;
 import back.petionary.domain.loss.entity.ReportLoss;
 import back.petionary.domain.loss.repository.ReportLossRepository;
 import back.petionary.exception.PetionaryException;
@@ -20,8 +22,8 @@ import java.util.stream.Collectors;
 public class ReportLossReadService {
     private final ReportLossRepository reportLossRepository;
 
-    public ReportLossResponse findReportLoss(Long accountId, Long reportLossId) {
-        ReportLoss reportLoss = reportLossRepository.findByIdAndAccountId(reportLossId, accountId).orElseThrow(() -> new PetionaryException("회원 id에 해당하는 게시물을 찾지 못했습니다."));
+    public ReportLossResponse findReportLoss(Long reportLossId) {
+        ReportLoss reportLoss = reportLossRepository.findById(reportLossId).orElseThrow(() -> new PetionaryException("해당하는 게시물을 찾을 수 없습니다."));
         return new ReportLossResponse(reportLoss.getAccount().getNickName(), reportLoss.getPet().getPetName(), reportLoss.getPet().getPetBirth(), reportLoss.getFeature(), reportLoss.getLossLocation(),
                 reportLoss.getLossDateTime(), reportLoss.getContent());
     }
@@ -29,7 +31,7 @@ public class ReportLossReadService {
     public List<ReportLossListResponse> findReportLossList(Pageable pageable) {
         Page<ReportLoss> reportLossPage = reportLossRepository.findAll(pageable);
         return reportLossPage.getContent().stream()
-                .map(page -> new ReportLossListResponse(page.getFeature(), page.getAccount().getNickName(), page.getLossLocation()))
+                .map(report -> new ReportLossListResponse(report.getFeature(), report.getAccount().getNickName(), report.getLossLocation()))
                 .collect(Collectors.toList());
     }
 }

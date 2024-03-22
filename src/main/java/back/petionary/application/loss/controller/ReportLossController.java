@@ -28,9 +28,9 @@ public class ReportLossController {
         return reportLossWriteService.create(accountId, petId, reportLossRequest);
     }
     @ApiOperation(value = "reportLoss 분실 신고 상세보기 조회", notes = "분실 신고 상세보기를 조회합니다.")
-    @GetMapping("{accountId}/{reportLossId}")
-    public ReportLossResponse findReportLoss(@PathVariable(value = "accountId") Long accountId, @PathVariable(value = "reportLossId") Long reportLossId) {
-        return reportLossReadService.findReportLoss(accountId, reportLossId);
+    @GetMapping("{reportLossId}")
+    public ReportLossResponse findReportLoss(@PathVariable(value = "reportLossId") Long reportLossId) {
+        return reportLossReadService.findReportLoss(reportLossId);
     }
 
     @ApiOperation(value = "reportLoss 분실 신고 게시판 전체 조회", notes = "분실 신고 전체 게시판을 조회합니다.")

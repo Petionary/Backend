@@ -18,7 +18,7 @@ public class ReportLossResponse {
     @ApiModelProperty(value = "펫 이름", example = "둥이")
     private String petName;
 
-    @ApiModelProperty(value = "펫 나이")
+    @ApiModelProperty(value = "펫 나이", example = "5살")
     private LocalDate petAge;
 
     @ApiModelProperty(value = "펫 특징", example = "양털 후리스 옷을 입고 있어요.")
