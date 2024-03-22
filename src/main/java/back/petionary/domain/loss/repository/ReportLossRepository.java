@@ -13,9 +13,9 @@ import java.util.Optional;
 public interface ReportLossRepository extends JpaRepository<ReportLoss, Long> {
 
     @Query("select r from ReportLoss r join fetch r.account join fetch r.pet where r.id = :reportLossId")
-    Optional<ReportLoss> findById(Long reportLossId);
+    Optional<ReportLoss> findByIdWithFetchJoin(Long reportLossId);
 
     @Query(value = "select r from ReportLoss r join fetch r.account",
             countQuery = "select count(r) from ReportLoss  r")
-    Page<ReportLoss> findAll(Pageable pageable);
+    Page<ReportLoss> findAllWithFetchJoin(Pageable pageable);
 }

@@ -23,13 +23,13 @@ public class ReportLossReadService {
     private final ReportLossRepository reportLossRepository;
 
     public ReportLossResponse findReportLoss(Long reportLossId) {
-        ReportLoss reportLoss = reportLossRepository.findById(reportLossId).orElseThrow(() -> new PetionaryException("해당하는 게시물을 찾을 수 없습니다."));
+        ReportLoss reportLoss = reportLossRepository.findByIdWithFetchJoin(reportLossId).orElseThrow(() -> new PetionaryException("해당하는 게시물을 찾을 수 없습니다."));
         return new ReportLossResponse(reportLoss.getAccount().getNickName(), reportLoss.getPet().getPetName(), reportLoss.getPet().getPetBirth(), reportLoss.getFeature(), reportLoss.getLossLocation(),
                 reportLoss.getLossDateTime(), reportLoss.getContent());
     }
 
     public List<ReportLossListResponse> findReportLossList(Pageable pageable) {
-        Page<ReportLoss> reportLossPage = reportLossRepository.findAll(pageable);
+        Page<ReportLoss> reportLossPage = reportLossRepository.findAllWithFetchJoin(pageable);
         return reportLossPage.getContent().stream()
                 .map(report -> new ReportLossListResponse(report.getFeature(), report.getAccount().getNickName(), report.getLossLocation()))
                 .collect(Collectors.toList());
