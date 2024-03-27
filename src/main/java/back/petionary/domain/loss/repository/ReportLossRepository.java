@@ -16,6 +16,6 @@ public interface ReportLossRepository extends JpaRepository<ReportLoss, Long> {
     Optional<ReportLoss> findByIdWithFetchJoin(Long reportLossId);
 
     @Query(value = "select r from ReportLoss r join fetch r.account",
-            countQuery = "select count(r) from ReportLoss  r")
+            countQuery = "select count(r) from ReportLoss r")
     Page<ReportLoss> findAllWithFetchJoin(Pageable pageable);
 }
