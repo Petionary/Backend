@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-@Api(tags = {"분실 신고 등록 API"}, description = "ReportLossController")
+@Api(tags = {"분실 신고 API"}, description = "ReportLossController")
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/report-loss")
