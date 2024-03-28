@@ -1,6 +1,7 @@
 package back.petionary.application.loss.service;
 
 import back.petionary.application.loss.dto.response.ReportLossListResponse;
+import back.petionary.application.loss.dto.response.ReportLossMainListResponse;
 import back.petionary.application.loss.dto.response.ReportLossResponse;
 import back.petionary.domain.account.entity.Account;
 import back.petionary.domain.account.repository.AccountRepository;
@@ -32,6 +33,13 @@ public class ReportLossReadService {
         Page<ReportLoss> reportLossPage = reportLossRepository.findAllWithFetchJoin(pageable);
         return reportLossPage.getContent().stream()
                 .map(report -> new ReportLossListResponse(report.getFeature(), report.getAccount().getNickName(), report.getLossLocation()))
+                .collect(Collectors.toList());
+    }
+
+    public List<ReportLossMainListResponse> findReportLossMainList() {
+        List<ReportLoss> reportLossList = reportLossRepository.findAll();
+        return reportLossList.stream()
+                .map(loss -> new ReportLossMainListResponse(loss.getPet().getPetName(), loss.getLossLocation(), loss.getLossDateTime()))
                 .collect(Collectors.toList());
     }
 }

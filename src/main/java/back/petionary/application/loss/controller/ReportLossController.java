@@ -2,6 +2,7 @@ package back.petionary.application.loss.controller;
 
 import back.petionary.application.loss.dto.request.ReportLossRequest;
 import back.petionary.application.loss.dto.response.ReportLossListResponse;
+import back.petionary.application.loss.dto.response.ReportLossMainListResponse;
 import back.petionary.application.loss.dto.response.ReportLossResponse;
 import back.petionary.application.loss.service.ReportLossReadService;
 import back.petionary.application.loss.service.ReportLossWriteService;
@@ -37,5 +38,11 @@ public class ReportLossController {
     @GetMapping
     public List<ReportLossListResponse> findReportLossList(@PageableDefault(size = 6) Pageable pageable) {
         return reportLossReadService.findReportLossList(pageable);
+    }
+
+    @ApiOperation(value = "main reportLoss 분실 신고 조회", notes = "등록된 최신 데이터 5개의 분실 신고 게시물을 조회합니다.")
+    @GetMapping("/main")
+    public List<ReportLossMainListResponse> findReportLossMainList() {
+        return reportLossReadService.findReportLossMainList();
     }
 }
