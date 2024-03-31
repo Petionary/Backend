@@ -1,4 +1,4 @@
-package back.petionary.application.mypet.dto.request;
+package back.petionary.application.mypet.dto.response;
 
 import back.petionary.application.mypet.enums.PetGender;
 import back.petionary.application.mypet.enums.PetSpecies;
@@ -6,17 +6,15 @@ import io.swagger.annotations.ApiModelProperty;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
 import java.time.LocalDate;
 
 @Getter
 @AllArgsConstructor
-public class MypetCreateRequest {
+public class MypetResponse {
     @ApiModelProperty(value = "이미지 url")
     private String imgUrl;
 
-    @ApiModelProperty(value = "펫 이름", example = "둥이")
+    @ApiModelProperty(value = "펫 이름", example = "밍밍")
     private String name;
 
     @ApiModelProperty(value = "펫 생년월일", example = "2019-10-10")
@@ -33,4 +31,5 @@ public class MypetCreateRequest {
 
     @ApiModelProperty(value = "펫 상세 정보", example = "몸에 검은색 반점이 있어요.")
     private String content;
+
 }
