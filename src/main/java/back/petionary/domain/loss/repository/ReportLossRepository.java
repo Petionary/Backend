@@ -20,6 +20,6 @@ public interface ReportLossRepository extends JpaRepository<ReportLoss, Long> {
             countQuery = "select count(r) from ReportLoss r")
     Page<ReportLoss> findAllWithFetchJoin(Pageable pageable);
 
-    @Query(value = "select * from report_loss where loss_date_time >= date_add(now(), interval-1 week) order by id desc limit 5", nativeQuery = true)
+    @Query(value = "select * from report_loss where created_at >= date_add(now(), interval-1 week) order by created_at desc limit 5", nativeQuery = true)
     List<ReportLoss> findAll();
 }
