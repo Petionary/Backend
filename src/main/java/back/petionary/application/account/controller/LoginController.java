@@ -19,5 +19,5 @@ public class LoginController {
     }
 
     @GetMapping("/login/oauth2/naver-login")
-    public LoginToken naverLogin(@RequestParam String code) { return socialLoginService.getNaverAccessToken(code); }
+    public LoginToken naverLogin(@RequestParam String code, @RequestParam String state) { return socialLoginService.getNaverAccessToken(code, state); }
 }

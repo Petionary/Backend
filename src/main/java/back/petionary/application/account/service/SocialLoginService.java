@@ -124,13 +124,15 @@ public class SocialLoginService {
         return null;
     }
 
-    public LoginToken getNaverAccessToken(String code) {
+    public LoginToken getNaverAccessToken(String code, String state) {
         RestTemplate rt = new RestTemplate();
         HttpHeaders httpHeaders = new HttpHeaders();
         httpHeaders.add("Content-type", "application/x-www-form-urlencoded;charset=utf-8");
 
         MultiValueMap<String, String> params = accessTokenParams("authorization_code",
                 NAVER_CLIENT_ID, code, NAVER_REDIRECT_URI, NAVER_CLIENT_SECRET);
+        params.add("state", state);
+
 
         HttpEntity<MultiValueMap<String, String>> accessTokenRequest = new HttpEntity<>(params,
                 httpHeaders);
