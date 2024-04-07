@@ -24,9 +24,11 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.math.BigInteger;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.security.SecureRandom;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -124,15 +126,20 @@ public class SocialLoginService {
         return null;
     }
 
-    public LoginToken getNaverAccessToken(String code, String state) {
+    public String generateState() {
+        SecureRandom random = new SecureRandom();
+        return new BigInteger(130, random).toString(32);
+    }
+
+    public LoginToken getNaverAccessToken(String code) {
         RestTemplate rt = new RestTemplate();
         HttpHeaders httpHeaders = new HttpHeaders();
         httpHeaders.add("Content-type", "application/x-www-form-urlencoded;charset=utf-8");
 
         MultiValueMap<String, String> params = accessTokenParams("authorization_code",
                 NAVER_CLIENT_ID, code, NAVER_REDIRECT_URI, NAVER_CLIENT_SECRET);
+        String state = generateState();
         params.add("state", state);
-
 
         HttpEntity<MultiValueMap<String, String>> accessTokenRequest = new HttpEntity<>(params,
                 httpHeaders);
@@ -152,6 +159,7 @@ public class SocialLoginService {
 
             String email = (String) responseParse.get("email");
             String userName = (String) responseParse.get("name");
+
             Account account = null;
             if (!accountRepository.existsByEmail(email)) {
                 Account naverUser = new Account(email, userName, SocialType.NAVER);
